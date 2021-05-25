@@ -11,19 +11,19 @@ export class MainView extends React.Component {
           _id: 1,
           Title: "Inception",
           Description: "desc1...",
-          ImagePath: "...",
+          ImagePath: "https://picsum.photos/200/300",
         },
         {
           _id: 2,
           Title: "The Shawshank Redemption",
           Description: "desc2...",
-          ImagePath: "...",
+          ImagePath: "https://picsum.photos/200/300",
         },
         {
           _id: 3,
           Title: "Gladiator",
           Description: "desc3...",
-          ImagePath: "...",
+          ImagePath: "https://picsum.photos/200/300",
         },
       ],
       selectedMovie: null,
@@ -39,8 +39,9 @@ export class MainView extends React.Component {
   render() {
     const { movies, selectedMovie } = this.state;
 
-    if (movies.length === 0)
+    if (movies.length === 0) {
       return <div className="main-view">The list is empty!</div>;
+    }
 
     return (
       <div className="main-view">

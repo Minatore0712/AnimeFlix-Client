@@ -29765,17 +29765,17 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         _id: 1,
         Title: "Inception",
         Description: "desc1...",
-        ImagePath: "..."
+        ImagePath: "https://picsum.photos/200/300"
       }, {
         _id: 2,
         Title: "The Shawshank Redemption",
         Description: "desc2...",
-        ImagePath: "..."
+        ImagePath: "https://picsum.photos/200/300"
       }, {
         _id: 3,
         Title: "Gladiator",
         Description: "desc3...",
-        ImagePath: "..."
+        ImagePath: "https://picsum.photos/200/300"
       }],
       selectedMovie: null
     };
@@ -29797,9 +29797,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       var _this$state = this.state,
           movies = _this$state.movies,
           selectedMovie = _this$state.selectedMovie;
-      if (movies.length === 0) return /*#__PURE__*/_react.default.createElement("div", {
-        className: "main-view"
-      }, "The list is empty!");
+
+      if (movies.length === 0) {
+        return /*#__PURE__*/_react.default.createElement("div", {
+          className: "main-view"
+        }, "The list is empty!");
+      }
+
       return /*#__PURE__*/_react.default.createElement("div", {
         className: "main-view"
       }, selectedMovie ? /*#__PURE__*/_react.default.createElement(_movieView.MovieView, {
@@ -29986,7 +29990,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64727" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61124" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
