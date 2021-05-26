@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import "./login-view.scss";
+import "./registration-view.scss";
 import PropTypes from "prop-types";
 
-export function LoginView(props) {
+export function RegistrationView(props) {
+  const [initialPassword, setInitialPassword] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -10,16 +11,21 @@ export function LoginView(props) {
     e.preventDefault();
     console.log(username, password);
 
-    // Send a request to the server for authentication then call props.onLoggedIn(username)
-    props.onLoggedIn({
-      username,
-      password,
-    });
+    const areEqual = initialPassword === password;
+    if (areEqual) {
+      // Send a request to the server for authentication then call props.onLoggedIn(username)
+      props.onRegistered({
+        username,
+        password,
+      });
+      return;
+    }
+    console.log("passwords don't match");
   };
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Registration</h1>
       <form>
         <label>
           Username:
@@ -33,6 +39,14 @@ export function LoginView(props) {
           Password:
           <input
             type="password"
+            value={initialPassword}
+            onChange={(e) => setInitialPassword(e.target.value)}
+          />
+        </label>
+        <label>
+          Repeat Password:
+          <input
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -41,18 +55,14 @@ export function LoginView(props) {
           Submit
         </button>
       </form>
-      <button type="button" onClick={props.onRegister}>
-        Register now
-      </button>
     </div>
   );
 }
 
-LoginView.propTypes = {
+RegistrationView.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
   }),
-  onLoggedIn: PropTypes.func.isRequired,
-  onRegister: PropTypes.func.isRequired,
+  onRegistered: PropTypes.func.isRequired,
 };
