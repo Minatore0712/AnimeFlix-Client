@@ -1,0 +1,9 @@
+.cardStyle {
+  transition: 0.3s ease-in-out;
+  -webkit-box-shadow: 1px 2px 9px 7px rgba(25, 80, 145, 0.04);
+  box-shadow: 1px 2px 9px 7px rgba(25, 80, 145, 0.04);
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
