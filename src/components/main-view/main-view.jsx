@@ -35,16 +35,37 @@ export class MainView extends React.Component {
       });
   }
 
+  getMovies(token) {
+    axios
+      .get("YOUR_API_URL/movies", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        // Assign the result to the state
+        this.setState({
+          movies: response.data,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   setSelectedMovie(newSelectedMovie) {
     this.setState({
       selectedMovie: newSelectedMovie,
     });
   }
 
-  onLoggedIn(user) {
+  onLoggedIn(authData) {
+    console.log(authData);
     this.setState({
-      user,
+      user: authData.user.Username,
     });
+
+    localStorage.setItem("token", authData.token);
+    localStorage.setItem("user", authData.user.Username);
+    this.getMovies(authData.token);
   }
 
   onRegister() {
@@ -73,11 +94,11 @@ export class MainView extends React.Component {
       );
     }
 
-    if (!registered) {
-      return (
-        <RegistrationView onRegistered={(user) => this.onRegistered(user)} />
-      );
-    }
+    // if (!registered) {
+    //   return (
+    //     <RegistrationView onRegistered={(user) => this.onRegistered(user)} />
+    //   );
+    // }
 
     if (movies.length === 0) {
       return <div className="main-view" />;
