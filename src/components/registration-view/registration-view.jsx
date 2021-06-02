@@ -1,30 +1,37 @@
 import React, { useState } from "react";
 import "./registration-view.scss";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 
 export function RegistrationView(props) {
-  const [initialPassword, setInitialPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [birthdate, setBirthdate] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
-
-    const areEqual = initialPassword === password;
-    if (areEqual) {
-      // Send a request to the server for authentication then call props.onLoggedIn(username)
-      props.onRegistered({
-        username,
-        password,
+    axios
+      .post("https://anime-flix-db.herokuapp.com/users", {
+        Username: username,
+        Password: password,
+        ConfirmPassword: confirmPassword,
+        Email: email,
+        Birthdate: birthdate,
+      })
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+      })
+      .catch((e) => {
+        console.log("error registering the user");
       });
-      return;
-    }
-    console.log("passwords don't match");
   };
 
   return (
@@ -39,7 +46,18 @@ export function RegistrationView(props) {
               <Form.Control
                 type="text"
                 value={username}
+                placeholder="Enter Username"
                 onChange={(e) => setUsername(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email:</Form.Label>
+              <Form.Control
+                type="email"
+                value={email}
+                placeholder="Enter your Email"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
 
@@ -47,17 +65,28 @@ export function RegistrationView(props) {
               <Form.Label>Password:</Form.Label>
               <Form.Control
                 type="password"
-                value={initialPassword}
-                onChange={(e) => setInitialPassword(e.target.value)}
+                value={password}
+                placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
 
-            <Form.Group controlId="formPassword">
-              <Form.Label>Repeat Password:</Form.Label>
+            <Form.Group controlId="confirmformPassword">
+              <Form.Label>Confirm Password:</Form.Label>
               <Form.Control
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={confirmPassword}
+                placeholder="Enter Password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formBirthdate">
+              <Form.Label>Birthdate:</Form.Label>
+              <Form.Control
+                type="date"
+                placeholder="MM/DD/YYYY"
+                onChange={(e) => setBirthdate(e.target.value)}
               />
             </Form.Group>
 
@@ -68,46 +97,14 @@ export function RegistrationView(props) {
         </div>
       </Container>
     </div>
-
-    // <div>
-    //   <h1>Registration</h1>
-    //   <form>
-    //     <label>
-    //       Username:
-    //       <input
-    //         type="text"
-    //         value={username}
-    //         onChange={(e) => setUsername(e.target.value)}
-    //       />
-    //     </label>
-    //     <label>
-    //       Password:
-    //       <input
-    //         type="password"
-    //         value={initialPassword}
-    //         onChange={(e) => setInitialPassword(e.target.value)}
-    //       />
-    //     </label>
-    //     <label>
-    //       Repeat Password:
-    //       <input
-    //         type="password"
-    //         value={password}
-    //         onChange={(e) => setPassword(e.target.value)}
-    //       />
-    //     </label>
-    //     <button type="submit" onClick={handleSubmit}>
-    //       Submit
-    //     </button>
-    //   </form>
-    // </div>
   );
 }
 
 RegistrationView.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
+  register: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthdate: PropTypes.string.isRequired,
   }),
-  onRegistered: PropTypes.func.isRequired,
 };
