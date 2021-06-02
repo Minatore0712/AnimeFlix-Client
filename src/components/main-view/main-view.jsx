@@ -98,7 +98,7 @@ export class MainView extends React.Component {
     return (
       <Router>
         <Navbar
-          bg="primary"
+          bg="secondary"
           expand="lg"
           variant="dark"
           expand="lg"
@@ -128,6 +128,11 @@ export class MainView extends React.Component {
                 </ul>
               ) : (
                 <ul>
+                  <Link to={`/users/${user}`}>
+                    <Button variant="link" className="navbar-link text-light">
+                      My Account
+                    </Button>
+                  </Link>
                   <Link to={`/`}>
                     <Button variant="link" className="navbar-link text-light">
                       Movies

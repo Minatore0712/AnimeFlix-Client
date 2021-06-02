@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import "./movie-view.scss";
 
@@ -23,6 +24,16 @@ export class MovieView extends React.Component {
           >
             Back
           </Button>
+          <Link to={`/genres/${movie.Genre.Name}`}>
+            <Button className="mb-2" block variant="primary">
+              Genre
+            </Button>
+          </Link>
+          <Link to={`/directors/${movie.Director.Name}`}>
+            <Button className="mb-2" block variant="primary">
+              Director
+            </Button>
+          </Link>
         </Card.Body>
       </Card>
     );
