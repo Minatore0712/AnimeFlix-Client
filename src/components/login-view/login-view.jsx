@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -53,6 +54,10 @@ export function LoginView(props) {
             <Button variant="primary" type="submit" onClick={handleSubmit}>
               Submit
             </Button>
+            <p>
+              Don't have an account?
+              <Link to="/register"> Register</Link>
+            </p>
           </Form>
         </div>
       </Container>
