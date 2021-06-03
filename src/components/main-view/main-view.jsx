@@ -304,7 +304,6 @@ export class MainView extends React.Component {
             if (!this.state.user || !this.state.userData) {
               return login;
             }
-
             return (
               <div>
                 {navigation}

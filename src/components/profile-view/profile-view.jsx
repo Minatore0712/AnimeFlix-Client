@@ -40,11 +40,11 @@ export function ProfileView(props) {
         </Form.Group>
 
         <Form.Group controlId="formPassword">
-          <Form.Label>Password:</Form.Label>
+          <Form.Label>New Password:</Form.Label>
           <Form.Control
             type="password"
             value={password}
-            placeholder="Enter Password"
+            placeholder="Enter new Password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>

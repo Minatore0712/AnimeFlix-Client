@@ -57322,10 +57322,10 @@ function ProfileView(props) {
     }
   })), /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "formPassword"
-  }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Password:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
+  }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "New Password:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "password",
     value: password,
-    placeholder: "Enter Password",
+    placeholder: "Enter new Password",
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
