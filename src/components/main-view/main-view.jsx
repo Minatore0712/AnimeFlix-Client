@@ -99,6 +99,22 @@ export class MainView extends React.Component {
       });
   }
 
+  deleteUser(username) {
+    const token = localStorage.getItem("token");
+    axios
+      .delete("https://anime-flix-db.herokuapp.com/users/" + username, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        this.onLoggedOut();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
   onLoggedIn(authData) {
     console.log(authData);
     this.setState({
@@ -297,6 +313,7 @@ export class MainView extends React.Component {
                     user={this.state.userData}
                     onBackClick={() => history.goBack()}
                     onSaveClick={(user) => this.updateUser(user)}
+                    onDeleteClick={(username) => this.deleteUser(username)}
                   />
                 </Container>
               </div>

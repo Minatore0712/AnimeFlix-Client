@@ -57350,7 +57350,11 @@ function ProfileView(props) {
         Birthday: birthday
       });
     }
-  }, "Save")));
+  }, "Save"), /*#__PURE__*/_react.default.createElement(_Button.default, {
+    onClick: function onClick() {
+      props.onDeleteClick(username);
+    }
+  }, "Delete my Account")));
 }
 
 ProfileView.propTypes = {
@@ -57361,7 +57365,8 @@ ProfileView.propTypes = {
     Birthday: _propTypes.default.string.isRequired
   }),
   onBackClick: _propTypes.default.func.isRequired,
-  onSaveClick: _propTypes.default.func.isRequired
+  onSaveClick: _propTypes.default.func.isRequired,
+  onDeleteClick: _propTypes.default.func.isRequired
 };
 },{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","axios":"../node_modules/axios/index.js","moment":"../node_modules/moment/moment.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","./profile-view.scss":"components/profile-view/profile-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
@@ -57516,6 +57521,23 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "deleteUser",
+    value: function deleteUser(username) {
+      var _this4 = this;
+
+      var token = localStorage.getItem("token");
+
+      _axios.default.delete("https://anime-flix-db.herokuapp.com/users/" + username, {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        _this4.onLoggedOut();
+      }).catch(function (e) {
+        console.log(e);
+      });
+    }
+  }, {
     key: "onLoggedIn",
     value: function onLoggedIn(authData) {
       console.log(authData);
@@ -57545,7 +57567,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this,
+      var _this5 = this,
           _React$createElement;
 
       var _this$state = this.state,
@@ -57580,13 +57602,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         variant: "link",
         className: "navbar-link text-light",
         onClick: function onClick() {
-          return _this4.onLoggedOut();
+          return _this5.onLoggedOut();
         }
       }, "Logout"))))));
 
       var login = /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
         onLoggedIn: function onLoggedIn(user) {
-          return _this4.onLoggedIn(user);
+          return _this5.onLoggedIn(user);
         }
       });
 
@@ -57695,17 +57717,20 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           var match = _ref4.match,
               history = _ref4.history;
 
-          if (!_this4.state.user || !_this4.state.userData) {
+          if (!_this5.state.user || !_this5.state.userData) {
             return login;
           }
 
           return /*#__PURE__*/_react.default.createElement("div", null, navigation, /*#__PURE__*/_react.default.createElement(_Container.default, null, /*#__PURE__*/_react.default.createElement(_profileView.ProfileView, {
-            user: _this4.state.userData,
+            user: _this5.state.userData,
             onBackClick: function onBackClick() {
               return history.goBack();
             },
             onSaveClick: function onSaveClick(user) {
-              return _this4.updateUser(user);
+              return _this5.updateUser(user);
+            },
+            onDeleteClick: function onDeleteClick(username) {
+              return _this5.deleteUser(username);
             }
           })));
         }

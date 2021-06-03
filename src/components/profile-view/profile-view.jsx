@@ -78,6 +78,14 @@ export function ProfileView(props) {
         >
           Save
         </Button>
+
+        <Button
+          onClick={() => {
+            props.onDeleteClick(username);
+          }}
+        >
+          Delete my Account
+        </Button>
       </Form>
     </div>
   );
@@ -92,4 +100,5 @@ ProfileView.propTypes = {
   }),
   onBackClick: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
 };
