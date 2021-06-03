@@ -13,6 +13,7 @@ import { MovieView } from "../movie-view/movie-view";
 import { GenreView } from "../genre-view/genre-view";
 import { DirectorView } from "../director-view/director-view";
 import { RegistrationView } from "../registration-view/registration-view";
+import { ProfileView } from "../profile-view/profile-view";
 
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -26,16 +27,19 @@ export class MainView extends React.Component {
     this.state = {
       movies: [],
       user: null,
+      userData: undefined,
     };
   }
 
   componentDidMount() {
-    let accessToken = localStorage.getItem("token");
+    const accessToken = localStorage.getItem("token");
     if (accessToken !== null) {
+      const user = localStorage.getItem("user");
       this.setState({
-        user: localStorage.getItem("user"),
+        user,
       });
       this.getMovies(accessToken);
+      this.getUserData(accessToken, user);
     }
   }
 
@@ -54,16 +58,44 @@ export class MainView extends React.Component {
       });
   }
 
-  getUsers(token, user) {
+  getUserData(token, username) {
     axios
-      .get("https://anime-flix-db.herokuapp.com/users", {
+      .get("https://anime-flix-db.herokuapp.com/users/" + username, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        this.props.setUsers(response.data);
+        this.setState({
+          userData: response.data,
+        });
       })
       .catch(function (error) {
         console.log(error);
+      });
+  }
+
+  updateUser(user) {
+    const token = localStorage.getItem("token");
+    axios
+      .put(
+        "https://anime-flix-db.herokuapp.com/users/" + user.Username,
+        {
+          Username: user.Username,
+          Password: user.Password,
+          Email: user.Email,
+          Birthday: user.Birthday,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        const data = response.data;
+        props.onSaveClick(data);
+      })
+      .catch((e) => {
+        console.log("no such user");
       });
   }
 
@@ -244,6 +276,30 @@ export class MainView extends React.Component {
                   onBackClick={() => history.goBack()}
                 />
               </Col>
+            );
+          }}
+        />
+
+        {/* profile */}
+        <Route
+          exact
+          path="/users/:username"
+          render={({ match, history }) => {
+            if (!this.state.user || !this.state.userData) {
+              return login;
+            }
+
+            return (
+              <div>
+                {navigation}
+                <Container>
+                  <ProfileView
+                    user={this.state.userData}
+                    onBackClick={() => history.goBack()}
+                    onSaveClick={(user) => this.updateUser(user)}
+                  />
+                </Container>
+              </div>
             );
           }}
         />
