@@ -51748,17 +51748,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Navbar.Collapse, {
         className: "justify-content-end",
         id: "basic-navbar-nav"
-      }, !user ? /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-        to: "/"
-      }, /*#__PURE__*/_react.default.createElement(_Button.default, {
-        variant: "link",
-        className: "navbar-link text-light"
-      }, "Login")), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-        to: "/register"
-      }, /*#__PURE__*/_react.default.createElement(_Button.default, {
-        variant: "link",
-        className: "navbar-link text-light"
-      }, "Register"))) : /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      }, /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
         to: "/users/".concat(user)
       }, /*#__PURE__*/_react.default.createElement(_Button.default, {
         variant: "link",
@@ -51985,7 +51975,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59144" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54202" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -113,42 +113,27 @@ export class MainView extends React.Component {
               className="justify-content-end"
               id="basic-navbar-nav"
             >
-              {!user ? (
-                <ul>
-                  <Link to={`/`}>
-                    <Button variant="link" className="navbar-link text-light">
-                      Login
-                    </Button>
-                  </Link>
-                  <Link to={`/register`}>
-                    <Button variant="link" className="navbar-link text-light">
-                      Register
-                    </Button>
-                  </Link>
-                </ul>
-              ) : (
-                <ul>
-                  <Link to={`/users/${user}`}>
-                    <Button variant="link" className="navbar-link text-light">
-                      My Account
-                    </Button>
-                  </Link>
-                  <Link to={`/`}>
-                    <Button variant="link" className="navbar-link text-light">
-                      Movies
-                    </Button>
-                  </Link>
-                  <Link to={`/`}>
-                    <Button
-                      variant="link"
-                      className="navbar-link text-light"
-                      onClick={() => this.onLoggedOut()}
-                    >
-                      Logout
-                    </Button>
-                  </Link>
-                </ul>
-              )}
+              <ul>
+                <Link to={`/users/${user}`}>
+                  <Button variant="link" className="navbar-link text-light">
+                    My Account
+                  </Button>
+                </Link>
+                <Link to={`/`}>
+                  <Button variant="link" className="navbar-link text-light">
+                    Movies
+                  </Button>
+                </Link>
+                <Link to={`/`}>
+                  <Button
+                    variant="link"
+                    className="navbar-link text-light"
+                    onClick={() => this.onLoggedOut()}
+                  >
+                    Logout
+                  </Button>
+                </Link>
+              </ul>
             </Navbar.Collapse>
           </Container>
         </Navbar>
@@ -263,25 +248,6 @@ export class MainView extends React.Component {
             );
           }}
         />
-
-        {/* genre */}
-        {/* <Route
-            exact
-            path="/genres/:name"
-            render={({ match, history }) => {
-              return (
-                <Col md={6}>
-                  <GenreView
-                    genre={
-                      movies.find((m) => m.Genre.Name === match.params.name)
-                        .Genre
-                    }
-                    onBackClick={() => history.goBack()}
-                  />
-                </Col>
-              );
-            }}
-          /> */}
       </Router>
     );
   }
