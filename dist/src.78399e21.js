@@ -51435,8 +51435,6 @@ var _react = _interopRequireWildcard(require("react"));
 
 require("./registration-view.scss");
 
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
 var _axios = _interopRequireDefault(require("axios"));
 
 var _reactRouterDom = require("react-router-dom");
@@ -51444,8 +51442,6 @@ var _reactRouterDom = require("react-router-dom");
 var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
-
-var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -51465,7 +51461,7 @@ function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "und
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function RegistrationView(props) {
+function RegistrationView() {
   var _useState = (0, _react.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
@@ -51567,16 +51563,7 @@ function RegistrationView(props) {
     to: "/"
   }, " Login")))));
 }
-
-RegistrationView.propTypes = {
-  register: _propTypes.default.shape({
-    Username: _propTypes.default.string.isRequired,
-    Password: _propTypes.default.string.isRequired,
-    Email: _propTypes.default.string.isRequired,
-    Birthdate: _propTypes.default.string.isRequired
-  })
-};
-},{"react":"../node_modules/react/index.js","./registration-view.scss":"components/registration-view/registration-view.scss","prop-types":"../node_modules/prop-types/index.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./registration-view.scss":"components/registration-view/registration-view.scss","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -51736,7 +51723,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       var _this$state = this.state,
           movies = _this$state.movies,
           user = _this$state.user;
-      return /*#__PURE__*/_react.default.createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Navbar, (_React$createElement = {
+
+      var navigation = /*#__PURE__*/_react.default.createElement(_reactBootstrap.Navbar, (_React$createElement = {
         bg: "secondary",
         expand: "lg",
         variant: "dark"
@@ -51766,19 +51754,23 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick() {
           return _this4.onLoggedOut();
         }
-      }, "Logout")))))), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+      }, "Logout"))))));
+
+      var login = /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
+        onLoggedIn: function onLoggedIn(user) {
+          return _this4.onLoggedIn(user);
+        }
+      });
+
+      return /*#__PURE__*/_react.default.createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         render: function render() {
           if (!user) {
-            return /*#__PURE__*/_react.default.createElement(_Row.default, null, /*#__PURE__*/_react.default.createElement(_Col.default, null, /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
-              onLoggedIn: function onLoggedIn(user) {
-                return _this4.onLoggedIn(user);
-              }
-            })));
+            return login;
           }
 
-          return movies.map(function (m) {
+          var cards = movies.map(function (m) {
             return /*#__PURE__*/_react.default.createElement(_Col.default, {
               md: 3,
               key: m._id
@@ -51786,6 +51778,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
               movie: m
             }));
           });
+          return /*#__PURE__*/_react.default.createElement("div", null, navigation, /*#__PURE__*/_react.default.createElement(_Container.default, null, /*#__PURE__*/_react.default.createElement(_Row.default, null, cards)));
         }
       }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -51795,14 +51788,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
               history = _ref.history;
 
           if (!user) {
-            return /*#__PURE__*/_react.default.createElement(_Row.default, null, /*#__PURE__*/_react.default.createElement(_Col.default, null, /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
-              onLoggedIn: function onLoggedIn(user) {
-                return _this4.onLoggedIn(user);
-              }
-            })));
+            return login;
           }
 
-          return /*#__PURE__*/_react.default.createElement(_Col.default, {
+          return /*#__PURE__*/_react.default.createElement("div", null, navigation, /*#__PURE__*/_react.default.createElement(_Col.default, {
             md: 4
           }, /*#__PURE__*/_react.default.createElement(_movieView.MovieView, {
             movie: movies.find(function (m) {
@@ -51811,7 +51800,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             onBackClick: function onBackClick() {
               return history.goBack();
             }
-          }));
+          })));
         }
       }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
         path: "/register",
@@ -51827,11 +51816,11 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render(_ref2) {
           var match = _ref2.match,
               history = _ref2.history;
-          if (!user) return /*#__PURE__*/_react.default.createElement(_Col.default, null, /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
-            onLoggedIn: function onLoggedIn(user) {
-              return _this4.onLoggedIn(user);
-            }
-          }));
+
+          if (!user) {
+            return login;
+          }
+
           if (movies.length === 0) return /*#__PURE__*/_react.default.createElement("div", {
             className: "main-view"
           });
@@ -51852,16 +51841,16 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         render: function render(_ref3) {
           var match = _ref3.match,
               history = _ref3.history;
-          if (!user) return /*#__PURE__*/_react.default.createElement(_Col.default, null, /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
-            onLoggedIn: function onLoggedIn(user) {
-              return _this4.onLoggedIn(user);
-            }
-          }));
+
+          if (!user) {
+            return login;
+          }
+
           if (movies.length === 0) return /*#__PURE__*/_react.default.createElement("div", {
             className: "main-view"
           });
           return /*#__PURE__*/_react.default.createElement(_Col.default, {
-            md: 8
+            md: 6
           }, /*#__PURE__*/_react.default.createElement(_directorView.DirectorView, {
             director: movies.find(function (m) {
               return m.Director.Name === match.params.name;
@@ -51975,7 +51964,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54202" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61724" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

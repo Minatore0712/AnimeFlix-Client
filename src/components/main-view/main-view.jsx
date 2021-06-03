@@ -95,68 +95,76 @@ export class MainView extends React.Component {
   render() {
     const { movies, user } = this.state;
 
+    const navigation = (
+      <Navbar
+        bg="secondary"
+        expand="lg"
+        variant="dark"
+        expand="lg"
+        className="navbar shadow-sm"
+      >
+        <Container>
+          <Navbar.Brand href="http://localhost:1234" className="navbar-brand">
+            myFlix
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse
+            className="justify-content-end"
+            id="basic-navbar-nav"
+          >
+            <ul>
+              <Link to={`/users/${user}`}>
+                <Button variant="link" className="navbar-link text-light">
+                  My Account
+                </Button>
+              </Link>
+              <Link to={`/`}>
+                <Button variant="link" className="navbar-link text-light">
+                  Movies
+                </Button>
+              </Link>
+              <Link to={`/`}>
+                <Button
+                  variant="link"
+                  className="navbar-link text-light"
+                  onClick={() => this.onLoggedOut()}
+                >
+                  Logout
+                </Button>
+              </Link>
+            </ul>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    );
+
+    const login = <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+
     return (
       <Router>
-        <Navbar
-          bg="secondary"
-          expand="lg"
-          variant="dark"
-          expand="lg"
-          className="navbar shadow-sm"
-        >
-          <Container>
-            <Navbar.Brand href="http://localhost:1234" className="navbar-brand">
-              myFlix
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse
-              className="justify-content-end"
-              id="basic-navbar-nav"
-            >
-              <ul>
-                <Link to={`/users/${user}`}>
-                  <Button variant="link" className="navbar-link text-light">
-                    My Account
-                  </Button>
-                </Link>
-                <Link to={`/`}>
-                  <Button variant="link" className="navbar-link text-light">
-                    Movies
-                  </Button>
-                </Link>
-                <Link to={`/`}>
-                  <Button
-                    variant="link"
-                    className="navbar-link text-light"
-                    onClick={() => this.onLoggedOut()}
-                  >
-                    Logout
-                  </Button>
-                </Link>
-              </ul>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-
         {/* movies */}
         <Route
           exact
           path="/"
           render={() => {
             if (!user) {
-              return (
-                <Row>
-                  <Col>
-                    <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-                  </Col>
-                </Row>
-              );
+              return login;
             }
-            return movies.map((m) => (
+
+            const cards = movies.map((m) => (
               <Col md={3} key={m._id}>
                 <MovieCard movie={m} />
               </Col>
             ));
+
+            return (
+              <div>
+                {navigation}
+                <Container>
+                  <Row>{cards}</Row>
+                </Container>
+              </div>
+            );
           }}
         />
 
@@ -166,21 +174,18 @@ export class MainView extends React.Component {
           path="/movies/:movieId"
           render={({ match, history }) => {
             if (!user) {
-              return (
-                <Row>
-                  <Col>
-                    <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-                  </Col>
-                </Row>
-              );
+              return login;
             }
             return (
-              <Col md={4}>
-                <MovieView
-                  movie={movies.find((m) => m._id === match.params.movieId)}
-                  onBackClick={() => history.goBack()}
-                />
-              </Col>
+              <div>
+                {navigation}
+                <Col md={4}>
+                  <MovieView
+                    movie={movies.find((m) => m._id === match.params.movieId)}
+                    onBackClick={() => history.goBack()}
+                  />
+                </Col>
+              </div>
             );
           }}
         />
@@ -203,12 +208,9 @@ export class MainView extends React.Component {
           exact
           path="/genres/:name"
           render={({ match, history }) => {
-            if (!user)
-              return (
-                <Col>
-                  <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-                </Col>
-              );
+            if (!user) {
+              return login;
+            }
             if (movies.length === 0) return <div className="main-view" />;
             return (
               <Col md={6}>
@@ -228,15 +230,12 @@ export class MainView extends React.Component {
           exact
           path="/directors/:name"
           render={({ match, history }) => {
-            if (!user)
-              return (
-                <Col>
-                  <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-                </Col>
-              );
+            if (!user) {
+              return login;
+            }
             if (movies.length === 0) return <div className="main-view" />;
             return (
-              <Col md={8}>
+              <Col md={6}>
                 <DirectorView
                   director={
                     movies.find((m) => m.Director.Name === match.params.name)
