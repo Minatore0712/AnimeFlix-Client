@@ -115,6 +115,42 @@ export class MainView extends React.Component {
       });
   }
 
+  addFavorite(movie) {
+    const token = localStorage.getItem("token");
+
+    const username = this.state.user;
+    const movieId = movie._id;
+
+    axios
+      .post(
+        "https://anime-flix-db.herokuapp.com/users/" +
+          username +
+          "/Movies/" +
+          movieId,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("response of addFavorite");
+        console.log(response.data);
+        if (!response.data) {
+          return;
+        }
+        this.state.user = response.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  removeFavorite(movie) {
+    //
+  }
+
   onLoggedIn(authData) {
     console.log(authData);
     this.setState({
@@ -153,7 +189,7 @@ export class MainView extends React.Component {
       >
         <Container>
           <Navbar.Brand href="http://localhost:1234" className="navbar-brand">
-            myFlix
+            animeFlix
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse
@@ -201,7 +237,10 @@ export class MainView extends React.Component {
 
             const cards = movies.map((m) => (
               <Col md={3} key={m._id}>
-                <MovieCard movie={m} />
+                <MovieCard
+                  movie={m}
+                  onSaveClick={(movie) => this.addFavorite(movie)}
+                />
               </Col>
             ));
 
@@ -310,6 +349,7 @@ export class MainView extends React.Component {
                 <Container>
                   <ProfileView
                     user={this.state.userData}
+                    favMovies={[]}
                     onBackClick={() => history.goBack()}
                     onSaveClick={(user) => this.updateUser(user)}
                     onDeleteClick={(username) => this.deleteUser(username)}

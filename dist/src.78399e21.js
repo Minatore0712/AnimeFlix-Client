@@ -37363,7 +37363,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MovieCard = void 0;
+exports.MovieCard = MovieCard;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -37379,65 +37379,35 @@ var _Card = _interopRequireDefault(require("react-bootstrap/Card"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function MovieCard(props) {
+  var movie = props.movie;
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    props.onSaveClick(movie);
+  };
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+  return /*#__PURE__*/_react.default.createElement(_Card.default, {
+    className: "mt-4 cardStyle"
+  }, /*#__PURE__*/_react.default.createElement(_Card.default.Img, {
+    variant: "top",
+    src: movie.ImagePath
+  }), /*#__PURE__*/_react.default.createElement(_Card.default.Body, null, /*#__PURE__*/_react.default.createElement(_Card.default.Title, null, movie.Title), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+    to: "/movies/".concat(movie._id)
+  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
+    variant: "link"
+  }, "Open")), /*#__PURE__*/_react.default.createElement(_Button.default, {
+    type: "button",
+    onClick: handleSubmit
+  }, "Save to favorite")));
+}
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-var MovieCard = /*#__PURE__*/function (_React$Component) {
-  _inherits(MovieCard, _React$Component);
-
-  var _super = _createSuper(MovieCard);
-
-  function MovieCard() {
-    _classCallCheck(this, MovieCard);
-
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(MovieCard, [{
-    key: "render",
-    value: function render() {
-      var movie = this.props.movie;
-      return /*#__PURE__*/_react.default.createElement(_Card.default, {
-        className: "mt-4 cardStyle"
-      }, /*#__PURE__*/_react.default.createElement(_Card.default.Img, {
-        variant: "top",
-        src: movie.ImagePath
-      }), /*#__PURE__*/_react.default.createElement(_Card.default.Body, null, /*#__PURE__*/_react.default.createElement(_Card.default.Title, null, movie.Title), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-        to: "/movies/".concat(movie._id)
-      }, /*#__PURE__*/_react.default.createElement(_Button.default, {
-        variant: "link"
-      }, "Open"))));
-    }
-  }]);
-
-  return MovieCard;
-}(_react.default.Component);
-
-exports.MovieCard = MovieCard;
 MovieCard.propTypes = {
   movie: _propTypes.default.shape({
     Title: _propTypes.default.string.isRequired,
     ImagePath: _propTypes.default.string.isRequired
-  }).isRequired
+  }).isRequired,
+  onSaveClick: _propTypes.default.func.isRequired
 };
 },{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./movie-card.scss":"components/movie-card/movie-card.scss","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js"}],"components/movie-view/movie-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
@@ -57253,8 +57223,6 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _axios = _interopRequireDefault(require("axios"));
-
 var _moment = _interopRequireDefault(require("moment"));
 
 var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
@@ -57301,6 +57269,14 @@ function ProfileView(props) {
       _useState8 = _slicedToArray(_useState7, 2),
       birthday = _useState8[0],
       setBirthday = _useState8[1];
+
+  var element;
+
+  if (props.favMovies.length <= 0) {
+    element = /*#__PURE__*/_react.default.createElement("div", null, "You don't have any favorites!");
+  } else {
+    element = /*#__PURE__*/_react.default.createElement("div", null, "You have ", props.favMovies.length, " Favorite Movies");
+  }
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "Profile"), /*#__PURE__*/_react.default.createElement(_Form.default, null, /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "formUsername"
@@ -57354,7 +57330,7 @@ function ProfileView(props) {
     onClick: function onClick() {
       props.onDeleteClick(username);
     }
-  }, "Delete my Account")));
+  }, "Delete my Account")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "Favorite Movies"), /*#__PURE__*/_react.default.createElement("div", null, element)));
 }
 
 ProfileView.propTypes = {
@@ -57364,11 +57340,12 @@ ProfileView.propTypes = {
     Email: _propTypes.default.string.isRequired,
     Birthday: _propTypes.default.string.isRequired
   }),
+  favMovies: _propTypes.default.array.isRequired,
   onBackClick: _propTypes.default.func.isRequired,
   onSaveClick: _propTypes.default.func.isRequired,
   onDeleteClick: _propTypes.default.func.isRequired
 };
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","axios":"../node_modules/axios/index.js","moment":"../node_modules/moment/moment.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","./profile-view.scss":"components/profile-view/profile-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","moment":"../node_modules/moment/moment.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","./profile-view.scss":"components/profile-view/profile-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -57538,6 +57515,36 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "addFavorite",
+    value: function addFavorite(movie) {
+      var _this5 = this;
+
+      var token = localStorage.getItem("token");
+      var username = this.state.user;
+      var movieId = movie._id;
+
+      _axios.default.post("https://anime-flix-db.herokuapp.com/users/" + username + "/Movies/" + movieId, {}, {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        console.log("response of addFavorite");
+        console.log(response.data);
+
+        if (!response.data) {
+          return;
+        }
+
+        _this5.state.user = response.data;
+      }).catch(function (e) {
+        console.log(e);
+      });
+    }
+  }, {
+    key: "removeFavorite",
+    value: function removeFavorite(movie) {//
+    }
+  }, {
     key: "onLoggedIn",
     value: function onLoggedIn(authData) {
       console.log(authData);
@@ -57567,7 +57574,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this,
+      var _this6 = this,
           _React$createElement;
 
       var _this$state = this.state,
@@ -57581,7 +57588,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }, _defineProperty(_React$createElement, "expand", "lg"), _defineProperty(_React$createElement, "className", "navbar shadow-sm"), _React$createElement), /*#__PURE__*/_react.default.createElement(_Container.default, null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Navbar.Brand, {
         href: "http://localhost:1234",
         className: "navbar-brand"
-      }, "myFlix"), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Navbar.Toggle, {
+      }, "animeFlix"), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Navbar.Toggle, {
         "aria-controls": "basic-navbar-nav"
       }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Navbar.Collapse, {
         className: "justify-content-end",
@@ -57602,13 +57609,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         variant: "link",
         className: "navbar-link text-light",
         onClick: function onClick() {
-          return _this5.onLoggedOut();
+          return _this6.onLoggedOut();
         }
       }, "Logout"))))));
 
       var login = /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
         onLoggedIn: function onLoggedIn(user) {
-          return _this5.onLoggedIn(user);
+          return _this6.onLoggedIn(user);
         }
       });
 
@@ -57625,7 +57632,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
               md: 3,
               key: m._id
             }, /*#__PURE__*/_react.default.createElement(_movieCard.MovieCard, {
-              movie: m
+              movie: m,
+              onSaveClick: function onSaveClick(movie) {
+                return _this6.addFavorite(movie);
+              }
             }));
           });
           return /*#__PURE__*/_react.default.createElement("div", null, navigation, /*#__PURE__*/_react.default.createElement(_Container.default, null, /*#__PURE__*/_react.default.createElement(_Row.default, null, cards)));
@@ -57717,20 +57727,21 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           var match = _ref4.match,
               history = _ref4.history;
 
-          if (!_this5.state.user || !_this5.state.userData) {
+          if (!_this6.state.user || !_this6.state.userData) {
             return login;
           }
 
           return /*#__PURE__*/_react.default.createElement("div", null, navigation, /*#__PURE__*/_react.default.createElement(_Container.default, null, /*#__PURE__*/_react.default.createElement(_profileView.ProfileView, {
-            user: _this5.state.userData,
+            user: _this6.state.userData,
+            favMovies: [],
             onBackClick: function onBackClick() {
               return history.goBack();
             },
             onSaveClick: function onSaveClick(user) {
-              return _this5.updateUser(user);
+              return _this6.updateUser(user);
             },
             onDeleteClick: function onDeleteClick(username) {
-              return _this5.deleteUser(username);
+              return _this6.deleteUser(username);
             }
           })));
         }
@@ -57838,7 +57849,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61724" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55041" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

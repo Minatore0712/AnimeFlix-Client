@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
-
 import moment from "moment";
 
 import Form from "react-bootstrap/Form";
@@ -14,6 +12,13 @@ export function ProfileView(props) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(props.user.Email);
   const [birthday, setBirthday] = useState(props.user.Birthday);
+
+  let element;
+  if (props.favMovies.length <= 0) {
+    element = <div>You don't have any favorites!</div>;
+  } else {
+    element = <div>You have {props.favMovies.length} Favorite Movies</div>;
+  }
 
   return (
     <div>
@@ -87,6 +92,11 @@ export function ProfileView(props) {
           Delete my Account
         </Button>
       </Form>
+
+      <div>
+        <h1>Favorite Movies</h1>
+        <div>{element}</div>
+      </div>
     </div>
   );
 }
@@ -98,6 +108,7 @@ ProfileView.propTypes = {
     Email: PropTypes.string.isRequired,
     Birthday: PropTypes.string.isRequired,
   }),
+  favMovies: PropTypes.array.isRequired,
   onBackClick: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
