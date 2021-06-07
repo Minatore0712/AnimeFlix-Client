@@ -37384,8 +37384,31 @@ function MovieCard(props) {
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    props.onSaveClick(movie);
+
+    if (props.isFavorite) {
+      // is favorite
+      props.onRemoveClick(movie);
+    } else {
+      // not favorite
+      props.onSaveClick(movie);
+    }
   };
+
+  var buttonElement;
+
+  if (props.isFavorite) {
+    // is favorite
+    buttonElement = /*#__PURE__*/_react.default.createElement(_Button.default, {
+      type: "button",
+      onClick: handleSubmit
+    }, "Remove from favorites");
+  } else {
+    // not favorite
+    buttonElement = /*#__PURE__*/_react.default.createElement(_Button.default, {
+      type: "button",
+      onClick: handleSubmit
+    }, "Save to favorite");
+  }
 
   return /*#__PURE__*/_react.default.createElement(_Card.default, {
     className: "mt-4 cardStyle"
@@ -37396,10 +37419,7 @@ function MovieCard(props) {
     to: "/movies/".concat(movie._id)
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     variant: "link"
-  }, "Open")), /*#__PURE__*/_react.default.createElement(_Button.default, {
-    type: "button",
-    onClick: handleSubmit
-  }, "Save to favorite")));
+  }, "Open")), buttonElement));
 }
 
 MovieCard.propTypes = {
@@ -37407,7 +37427,9 @@ MovieCard.propTypes = {
     Title: _propTypes.default.string.isRequired,
     ImagePath: _propTypes.default.string.isRequired
   }).isRequired,
-  onSaveClick: _propTypes.default.func.isRequired
+  isFavorite: _propTypes.default.bool.isRequired,
+  onSaveClick: _propTypes.default.func.isRequired,
+  onRemoveClick: _propTypes.default.func.isRequired
 };
 },{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./movie-card.scss":"components/movie-card/movie-card.scss","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js"}],"components/movie-view/movie-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
@@ -57225,9 +57247,13 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _moment = _interopRequireDefault(require("moment"));
 
+var _movieCard = require("../movie-card/movie-card");
+
 var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+
+var _Col = _interopRequireDefault(require("react-bootstrap/Col"));
 
 require("./profile-view.scss");
 
@@ -57241,13 +57267,47 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function getFavMovies(movies, favMovieIds) {
+  if (!movies || !favMovieIds) {
+    console.log("user has no favorites yet");
+    return;
+  }
 
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+  var favMovies = [];
+
+  var _iterator = _createForOfIteratorHelper(favMovieIds),
+      _step;
+
+  try {
+    var _loop = function _loop() {
+      var id = _step.value;
+      var movie = movies.filter(function (m) {
+        return m._id === id;
+      })[0];
+      favMovies.push(movie);
+    };
+
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      _loop();
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return favMovies;
+}
 
 function ProfileView(props) {
   var _useState = (0, _react.useState)(props.user.Username),
@@ -57270,12 +57330,27 @@ function ProfileView(props) {
       birthday = _useState8[0],
       setBirthday = _useState8[1];
 
+  var favMovies = getFavMovies(props.movies, props.favMovieIds);
   var element;
 
-  if (props.favMovies.length <= 0) {
+  if (!favMovies || favMovies.length <= 0) {
     element = /*#__PURE__*/_react.default.createElement("div", null, "You don't have any favorites!");
   } else {
-    element = /*#__PURE__*/_react.default.createElement("div", null, "You have ", props.favMovies.length, " Favorite Movies");
+    element = favMovies.map(function (m) {
+      return /*#__PURE__*/_react.default.createElement(_Col.default, {
+        md: 3,
+        key: m._id
+      }, /*#__PURE__*/_react.default.createElement(_movieCard.MovieCard, {
+        movie: m,
+        isFavorite: true,
+        onSaveClick: function onSaveClick(m) {
+          return props.onSaveFavoClick(m);
+        },
+        onRemoveClick: function onRemoveClick(m) {
+          return props.onRemoveFavoClick(m);
+        }
+      }));
+    });
   }
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "Profile"), /*#__PURE__*/_react.default.createElement(_Form.default, null, /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
@@ -57340,12 +57415,15 @@ ProfileView.propTypes = {
     Email: _propTypes.default.string.isRequired,
     Birthday: _propTypes.default.string.isRequired
   }),
-  favMovies: _propTypes.default.array.isRequired,
   onBackClick: _propTypes.default.func.isRequired,
   onSaveClick: _propTypes.default.func.isRequired,
-  onDeleteClick: _propTypes.default.func.isRequired
+  onDeleteClick: _propTypes.default.func.isRequired,
+  movies: _propTypes.default.array,
+  favMovieIds: _propTypes.default.array,
+  onSaveFavoClick: _propTypes.default.func.isRequired,
+  onRemoveFavoClick: _propTypes.default.func.isRequired
 };
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","moment":"../node_modules/moment/moment.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","./profile-view.scss":"components/profile-view/profile-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","moment":"../node_modules/moment/moment.js","../movie-card/movie-card":"components/movie-card/movie-card.jsx","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","./profile-view.scss":"components/profile-view/profile-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -57529,20 +57607,44 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         }
       }).then(function (response) {
         console.log("response of addFavorite");
-        console.log(response.data);
 
         if (!response.data) {
           return;
         }
 
-        _this5.state.user = response.data;
+        _this5.setState({
+          userData: response.data
+        });
       }).catch(function (e) {
         console.log(e);
       });
     }
   }, {
     key: "removeFavorite",
-    value: function removeFavorite(movie) {//
+    value: function removeFavorite(movie) {
+      var _this6 = this;
+
+      var token = localStorage.getItem("token");
+      var username = this.state.user;
+      var movieId = movie._id;
+
+      _axios.default.delete("https://anime-flix-db.herokuapp.com/users/" + username + "/Movies/" + movieId, {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        console.log("removed from favorite");
+
+        if (!response.data) {
+          return;
+        }
+
+        _this6.setState({
+          userData: response.data
+        });
+      }).catch(function (e) {
+        console.log(e);
+      });
     }
   }, {
     key: "onLoggedIn",
@@ -57572,9 +57674,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "isFavorite",
+    value: function isFavorite(movie) {
+      return !this.state.userData || !this.state.userData.FavoriteMovies || this.state.userData.FavoriteMovies.indexOf(movie._id) >= 0;
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this6 = this,
+      var _this7 = this,
           _React$createElement;
 
       var _this$state = this.state,
@@ -57609,13 +57716,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         variant: "link",
         className: "navbar-link text-light",
         onClick: function onClick() {
-          return _this6.onLoggedOut();
+          return _this7.onLoggedOut();
         }
       }, "Logout"))))));
 
       var login = /*#__PURE__*/_react.default.createElement(_loginView.LoginView, {
         onLoggedIn: function onLoggedIn(user) {
-          return _this6.onLoggedIn(user);
+          return _this7.onLoggedIn(user);
         }
       });
 
@@ -57633,8 +57740,12 @@ var MainView = /*#__PURE__*/function (_React$Component) {
               key: m._id
             }, /*#__PURE__*/_react.default.createElement(_movieCard.MovieCard, {
               movie: m,
+              isFavorite: _this7.isFavorite(m),
               onSaveClick: function onSaveClick(movie) {
-                return _this6.addFavorite(movie);
+                return _this7.addFavorite(movie);
+              },
+              onRemoveClick: function onRemoveClick(movie) {
+                return _this7.removeFavorite(movie);
               }
             }));
           });
@@ -57727,21 +57838,28 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           var match = _ref4.match,
               history = _ref4.history;
 
-          if (!_this6.state.user || !_this6.state.userData) {
+          if (!_this7.state.user || !_this7.state.userData) {
             return login;
           }
 
           return /*#__PURE__*/_react.default.createElement("div", null, navigation, /*#__PURE__*/_react.default.createElement(_Container.default, null, /*#__PURE__*/_react.default.createElement(_profileView.ProfileView, {
-            user: _this6.state.userData,
-            favMovies: [],
+            user: _this7.state.userData,
             onBackClick: function onBackClick() {
               return history.goBack();
             },
             onSaveClick: function onSaveClick(user) {
-              return _this6.updateUser(user);
+              return _this7.updateUser(user);
             },
             onDeleteClick: function onDeleteClick(username) {
-              return _this6.deleteUser(username);
+              return _this7.deleteUser(username);
+            },
+            movies: _this7.state.movies,
+            favMovieIds: _this7.state.userData.FavoriteMovies,
+            onSaveFavoClick: function onSaveFavoClick(m) {
+              return _this7.addFavorite(m);
+            },
+            onRemoveFavoClick: function onRemoveFavoClick(m) {
+              return _this7.removeFavorite(m);
             }
           })));
         }
@@ -57849,7 +57967,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55041" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54583" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

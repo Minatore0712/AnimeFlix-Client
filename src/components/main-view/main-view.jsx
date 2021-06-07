@@ -136,11 +136,10 @@ export class MainView extends React.Component {
       )
       .then((response) => {
         console.log("response of addFavorite");
-        console.log(response.data);
         if (!response.data) {
           return;
         }
-        this.state.user = response.data;
+        this.setState({ userData: response.data });
       })
       .catch((e) => {
         console.log(e);
@@ -148,7 +147,33 @@ export class MainView extends React.Component {
   }
 
   removeFavorite(movie) {
-    //
+    const token = localStorage.getItem("token");
+
+    const username = this.state.user;
+    const movieId = movie._id;
+
+    axios
+      .delete(
+        "https://anime-flix-db.herokuapp.com/users/" +
+          username +
+          "/Movies/" +
+          movieId,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("removed from favorite");
+        if (!response.data) {
+          return;
+        }
+        this.setState({ userData: response.data });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   onLoggedIn(authData) {
@@ -174,6 +199,14 @@ export class MainView extends React.Component {
     this.setState({
       wantsRegistration: true,
     });
+  }
+
+  isFavorite(movie) {
+    return (
+      !this.state.userData ||
+      !this.state.userData.FavoriteMovies ||
+      this.state.userData.FavoriteMovies.indexOf(movie._id) >= 0
+    );
   }
 
   render() {
@@ -239,7 +272,9 @@ export class MainView extends React.Component {
               <Col md={3} key={m._id}>
                 <MovieCard
                   movie={m}
+                  isFavorite={this.isFavorite(m)}
                   onSaveClick={(movie) => this.addFavorite(movie)}
+                  onRemoveClick={(movie) => this.removeFavorite(movie)}
                 />
               </Col>
             ));
@@ -349,10 +384,13 @@ export class MainView extends React.Component {
                 <Container>
                   <ProfileView
                     user={this.state.userData}
-                    favMovies={[]}
                     onBackClick={() => history.goBack()}
                     onSaveClick={(user) => this.updateUser(user)}
                     onDeleteClick={(username) => this.deleteUser(username)}
+                    movies={this.state.movies}
+                    favMovieIds={this.state.userData.FavoriteMovies}
+                    onSaveFavoClick={(m) => this.addFavorite(m)}
+                    onRemoveFavoClick={(m) => this.removeFavorite(m)}
                   />
                 </Container>
               </div>

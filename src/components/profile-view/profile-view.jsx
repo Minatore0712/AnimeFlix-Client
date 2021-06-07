@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 
+import { MovieCard } from "../movie-card/movie-card";
+
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
 
 import "./profile-view.scss";
+
+function getFavMovies(movies, favMovieIds) {
+  if (!movies || !favMovieIds) {
+    console.log("user has no favorites yet");
+    return;
+  }
+  const favMovies = [];
+  for (const id of favMovieIds) {
+    const movie = movies.filter((m) => {
+      return m._id === id;
+    })[0];
+    favMovies.push(movie);
+  }
+  return favMovies;
+}
 
 export function ProfileView(props) {
   const [username, setUsername] = useState(props.user.Username);
@@ -13,11 +31,22 @@ export function ProfileView(props) {
   const [email, setEmail] = useState(props.user.Email);
   const [birthday, setBirthday] = useState(props.user.Birthday);
 
+  const favMovies = getFavMovies(props.movies, props.favMovieIds);
+
   let element;
-  if (props.favMovies.length <= 0) {
+  if (!favMovies || favMovies.length <= 0) {
     element = <div>You don't have any favorites!</div>;
   } else {
-    element = <div>You have {props.favMovies.length} Favorite Movies</div>;
+    element = favMovies.map((m) => (
+      <Col md={3} key={m._id}>
+        <MovieCard
+          movie={m}
+          isFavorite={true}
+          onSaveClick={(m) => props.onSaveFavoClick(m)}
+          onRemoveClick={(m) => props.onRemoveFavoClick(m)}
+        />
+      </Col>
+    ));
   }
 
   return (
@@ -108,8 +137,11 @@ ProfileView.propTypes = {
     Email: PropTypes.string.isRequired,
     Birthday: PropTypes.string.isRequired,
   }),
-  favMovies: PropTypes.array.isRequired,
   onBackClick: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
+  movies: PropTypes.array,
+  favMovieIds: PropTypes.array,
+  onSaveFavoClick: PropTypes.func.isRequired,
+  onRemoveFavoClick: PropTypes.func.isRequired,
 };
