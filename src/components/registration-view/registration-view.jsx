@@ -17,6 +17,21 @@ export function RegistrationView() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    const pattern = new RegExp(
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+    );
+    const validEmail = pattern.test(email);
+
+    if (!email || !validEmail) {
+      alert("incorrect email format");
+      return;
+    }
+
     axios
       .post("https://anime-flix-db.herokuapp.com/users", {
         Username: username,
@@ -36,13 +51,12 @@ export function RegistrationView() {
   };
 
   return (
-    <div className="loginView">
-      <div className="centerVertical"></div>
+    <div className="registrationView">
       <div className="loginScreen">
-        <h1>Registration</h1>
+        <h1 className="pb-3">Registration</h1>
         <Form>
           <Form.Group controlId="formUsername">
-            <Form.Label>Username:</Form.Label>
+            <Form.Label>Username:*</Form.Label>
             <Form.Control
               type="text"
               value={username}
@@ -52,7 +66,9 @@ export function RegistrationView() {
           </Form.Group>
 
           <Form.Group controlId="formEmail">
-            <Form.Label>Email:</Form.Label>
+            <Form.Label>
+              Email: <span>*</span>
+            </Form.Label>
             <Form.Control
               type="email"
               value={email}
@@ -62,7 +78,9 @@ export function RegistrationView() {
           </Form.Group>
 
           <Form.Group controlId="formPassword">
-            <Form.Label>Password:</Form.Label>
+            <Form.Label>
+              Password:<span>*</span>
+            </Form.Label>
             <Form.Control
               type="password"
               value={password}
@@ -72,7 +90,9 @@ export function RegistrationView() {
           </Form.Group>
 
           <Form.Group controlId="confirmformPassword">
-            <Form.Label>Confirm Password:</Form.Label>
+            <Form.Label>
+              Confirm Password:<span>*</span>
+            </Form.Label>
             <Form.Control
               type="password"
               value={confirmPassword}

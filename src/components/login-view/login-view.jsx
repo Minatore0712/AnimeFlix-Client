@@ -34,7 +34,7 @@ export function LoginView(props) {
       <Container>
         <div className="centerVertical"></div>
         <div className="loginScreen">
-          <h1>Login</h1>
+          <h1 className="pb-3">Login</h1>
           <Form>
             <Form.Group controlId="formUsername">
               <Form.Label>Username:</Form.Label>

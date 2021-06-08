@@ -7,6 +7,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import "./profile-view.scss";
 
@@ -124,7 +125,9 @@ export function ProfileView(props) {
 
       <div>
         <h1>Favorite Movies</h1>
-        <div>{element}</div>
+        <div>
+          <Row>{element}</Row>
+        </div>
       </div>
     </div>
   );

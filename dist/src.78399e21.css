@@ -1,3 +1,12 @@
+footer {
+  padding: 50px;
+  background-color: #242236;
+  color: white;
+}
+
+.navbar {
+  background-color: #242236;
+}
 .loginView {
   height: 100vh;
   background-color: #0b0a24;
@@ -28,6 +37,14 @@
 }
 .cardStyle:hover {
   transform: scale(1.02);
+}
+.registrationView {
+  height: 100vh;
+  background-color: #0b0a24;
+  background-image: url("https://c.wallhere.com/photos/0b/ca/anime_manga_anime_man_illustration_fan_art_dark_background_selective_coloring_texture-1746221.jpg!d");
+  background-size: contain;
+  background-blend-mode: screen;
+  padding-top: 100px;
 }
 body {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;

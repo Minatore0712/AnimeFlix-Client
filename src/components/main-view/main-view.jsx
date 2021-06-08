@@ -7,6 +7,8 @@ import {
   Link,
 } from "react-router-dom";
 
+import "./main-view.scss";
+
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
@@ -214,7 +216,6 @@ export class MainView extends React.Component {
 
     const navigation = (
       <Navbar
-        bg="secondary"
         expand="lg"
         variant="dark"
         expand="lg"
@@ -255,7 +256,34 @@ export class MainView extends React.Component {
       </Navbar>
     );
 
-    const login = <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+    const footer = (
+      <div>
+        <footer>
+          <Container>
+            <Row>
+              <Col md={6}>
+                <div>
+                  <p>animeFlix App</p>
+                  <p>Logo Placeholder</p>
+                </div>
+              </Col>
+              <Col md={6}>
+                <div>
+                  <p>2020 Minatore0712</p>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </footer>
+      </div>
+    );
+
+    const login = (
+      <div>
+        <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+        {footer}
+      </div>
+    );
 
     return (
       <Router>
@@ -285,6 +313,7 @@ export class MainView extends React.Component {
                 <Container>
                   <Row>{cards}</Row>
                 </Container>
+                {footer}
               </div>
             );
           }}
@@ -307,6 +336,7 @@ export class MainView extends React.Component {
                     onBackClick={() => history.goBack()}
                   />
                 </Col>
+                {footer}
               </div>
             );
           }}
@@ -318,9 +348,10 @@ export class MainView extends React.Component {
           render={() => {
             if (user) return <Redirect to="/" />;
             return (
-              <Col>
+              <div>
                 <RegistrationView />
-              </Col>
+                {footer}
+              </div>
             );
           }}
         />
@@ -335,14 +366,18 @@ export class MainView extends React.Component {
             }
             if (movies.length === 0) return <div className="main-view" />;
             return (
-              <Col md={6}>
-                <GenreView
-                  genre={
-                    movies.find((m) => m.Genre.Name === match.params.name).Genre
-                  }
-                  onBackClick={() => history.goBack()}
-                />
-              </Col>
+              <div>
+                <Col md={6}>
+                  <GenreView
+                    genre={
+                      movies.find((m) => m.Genre.Name === match.params.name)
+                        .Genre
+                    }
+                    onBackClick={() => history.goBack()}
+                  />
+                </Col>
+                {footer}
+              </div>
             );
           }}
         />
@@ -357,15 +392,18 @@ export class MainView extends React.Component {
             }
             if (movies.length === 0) return <div className="main-view" />;
             return (
-              <Col md={6}>
-                <DirectorView
-                  director={
-                    movies.find((m) => m.Director.Name === match.params.name)
-                      .Director
-                  }
-                  onBackClick={() => history.goBack()}
-                />
-              </Col>
+              <div>
+                <Col md={6}>
+                  <DirectorView
+                    director={
+                      movies.find((m) => m.Director.Name === match.params.name)
+                        .Director
+                    }
+                    onBackClick={() => history.goBack()}
+                  />
+                </Col>
+                {footer}
+              </div>
             );
           }}
         />
@@ -393,6 +431,7 @@ export class MainView extends React.Component {
                     onRemoveFavoClick={(m) => this.removeFavorite(m)}
                   />
                 </Container>
+                {footer}
               </div>
             );
           }}
