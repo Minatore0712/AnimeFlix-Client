@@ -52,7 +52,7 @@ export function ProfileView(props) {
 
   return (
     <div>
-      <h1>Profile</h1>
+      <h1 className="mt-5 mb-5">Edit Profile</h1>
       <Form>
         <Form.Group controlId="formUsername">
           <Form.Label>Username:</Form.Label>
@@ -94,6 +94,7 @@ export function ProfileView(props) {
         </Form.Group>
 
         <Button
+          className="button"
           onClick={() => {
             props.onBackClick();
           }}
@@ -102,6 +103,7 @@ export function ProfileView(props) {
         </Button>
 
         <Button
+          className="button ml-3"
           onClick={() => {
             props.onSaveClick({
               Username: username,
@@ -111,10 +113,11 @@ export function ProfileView(props) {
             });
           }}
         >
-          Save
+          Save Changes
         </Button>
 
         <Button
+          className="button ml-3"
           onClick={() => {
             props.onDeleteClick(username);
           }}
@@ -123,7 +126,7 @@ export function ProfileView(props) {
         </Button>
       </Form>
 
-      <div>
+      <div className="mt-5">
         <h1>Favorite Movies</h1>
         <div>
           <Row>{element}</Row>

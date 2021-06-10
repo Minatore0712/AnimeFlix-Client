@@ -24,15 +24,16 @@ body {
 .button {
   margin-top: 20px;
   border-radius: 100px;
-  color: white;
-  background-color: #242236;
+  color: #242236;
+  background-color: white;
   border: none;
   padding: 10px 20px 10px 20px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.1s ease-in-out;
 
   &:hover {
     background-color: #ffc02f;
     color: #242236;
+    transform: scale(1.1);
   }
 }
 

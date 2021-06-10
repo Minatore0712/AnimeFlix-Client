@@ -8,26 +8,27 @@ export class DirectorView extends React.Component {
     const { director, onBackClick } = this.props;
 
     return (
-      <div className="director-view">
-        <Card border="info" bg="dark" text="white" className="director-card">
+      <div className="genre-view">
+        <div className="genre-card">
           <Card.Body>
             <Card.Title>
-              <span className="text-primary">Name: </span> {director.Name}
+              <span>Name:&nbsp;&nbsp; </span>
+              {director.Name}
             </Card.Title>
             <Card.Text>
-              <span className="text-primary">Bio: </span>
+              <span>Bio:&nbsp;&nbsp; </span>
               {director.Bio}
             </Card.Text>
             <Card.Text>
-              <span className="text-primary">Birth: </span>
+              <span>Birth:&nbsp;&nbsp; </span>
               {director.Birth}
             </Card.Text>
             <Card.Text>
-              <span className="text-primary">Death: </span>
+              <span>Death:&nbsp;&nbsp; </span>
               {director.Death}
             </Card.Text>
             <Button
-              block
+              className="button"
               onClick={() => {
                 onBackClick();
               }}
@@ -35,7 +36,7 @@ export class DirectorView extends React.Component {
               Back
             </Button>
           </Card.Body>
-        </Card>
+        </div>
       </div>
     );
   }

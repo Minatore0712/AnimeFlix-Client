@@ -22,6 +22,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { Navbar } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import logo from "../../imgs/logo.png";
 
 export class MainView extends React.Component {
   constructor() {
@@ -262,13 +263,14 @@ export class MainView extends React.Component {
             <Row>
               <Col md={6}>
                 <div>
-                  <p>animeFlix App</p>
-                  <p>Logo Placeholder</p>
+                  <div className="footerLogo">
+                    <img src={logo} alt="logo" />
+                  </div>
                 </div>
               </Col>
               <Col md={6}>
-                <div>
-                  <p>2020 Minatore0712</p>
+                <div className="d-flex flex-row-reverse">
+                  <span>2020 Minatore0712</span>
                 </div>
               </Col>
             </Row>
@@ -329,12 +331,12 @@ export class MainView extends React.Component {
             return (
               <div>
                 {navigation}
-                <Col md={4}>
+                <Container>
                   <MovieView
                     movie={movies.find((m) => m._id === match.params.movieId)}
                     onBackClick={() => history.goBack()}
                   />
-                </Col>
+                </Container>
                 {footer}
               </div>
             );
@@ -366,7 +368,7 @@ export class MainView extends React.Component {
             if (movies.length === 0) return <div className="main-view" />;
             return (
               <div>
-                <Col md={6}>
+                <Container>
                   <GenreView
                     genre={
                       movies.find((m) => m.Genre.Name === match.params.name)
@@ -374,7 +376,7 @@ export class MainView extends React.Component {
                     }
                     onBackClick={() => history.goBack()}
                   />
-                </Col>
+                </Container>
                 {footer}
               </div>
             );
@@ -392,15 +394,18 @@ export class MainView extends React.Component {
             if (movies.length === 0) return <div className="main-view" />;
             return (
               <div>
-                <Col md={6}>
-                  <DirectorView
-                    director={
-                      movies.find((m) => m.Director.Name === match.params.name)
-                        .Director
-                    }
-                    onBackClick={() => history.goBack()}
-                  />
-                </Col>
+                <Container>
+                  <Col md={6}>
+                    <DirectorView
+                      director={
+                        movies.find(
+                          (m) => m.Director.Name === match.params.name
+                        ).Director
+                      }
+                      onBackClick={() => history.goBack()}
+                    />
+                  </Col>
+                </Container>
                 {footer}
               </div>
             );

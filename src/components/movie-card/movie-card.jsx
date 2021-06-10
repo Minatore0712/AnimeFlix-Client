@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 
 import "./movie-card.scss";
 
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-
 import heartempty from "../../imgs/heart-regular.svg";
 import heartfull from "../../imgs/heart-solid.svg";
 
@@ -39,16 +36,17 @@ export function MovieCard(props) {
   }
 
   return (
-    <Card className="mt-4 cardStyle">
-      <Card.Img variant="top" src={movie.ImagePath} />
-      <Card.Body>
-        <Card.Title>{movie.Title}</Card.Title>
-        <Link to={`/movies/${movie._id}`}>
-          <Button variant="link">Open</Button>
-        </Link>
+    <div className="cardWrap">
+      <Link to={`/movies/${movie._id}`}>
+        <div className="img-card">
+          <img src={movie.ImagePath} />
+        </div>
+      </Link>
+      <div className="title-card">
+        <span>{movie.Title}</span>
         {buttonElement}
-      </Card.Body>
-    </Card>
+      </div>
+    </div>
   );
 }
 

@@ -41,13 +41,14 @@ export function LoginView(props) {
                 <div className="col-lg-10 col-xl-7 mx-auto">
                   <h3>LOGIN</h3>
                   <p className="text-white mb-4">
-                    Enter the world of anime Movies
+                    Enter the world of Anime Movies
                   </p>
                   <Form>
                     <Form.Group controlId="formUsername">
                       <Form.Label>Username:</Form.Label>
                       <Form.Control
                         type="text"
+                        placeholder="Your Username"
                         onChange={(e) => setUsername(e.target.value)}
                       />
                     </Form.Group>
@@ -56,6 +57,7 @@ export function LoginView(props) {
                       <Form.Label>Password:</Form.Label>
                       <Form.Control
                         type="password"
+                        placeholder="Your Password"
                         onChange={(e) => setPassword(e.target.value)}
                       />
                     </Form.Group>
@@ -67,7 +69,7 @@ export function LoginView(props) {
                     >
                       Submit
                     </Button>
-                    <p className="mt-5">
+                    <p className="mt-4">
                       Don't have an account?
                       <Link to="/register"> Register</Link>
                     </p>
