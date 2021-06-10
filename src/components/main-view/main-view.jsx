@@ -222,35 +222,34 @@ export class MainView extends React.Component {
         className="navbar shadow-sm"
       >
         <Container>
-          <Navbar.Brand href="http://localhost:1234" className="navbar-brand">
-            animeFlix
-          </Navbar.Brand>
+          <Navbar.Brand
+            href="http://localhost:1234"
+            className="navbar-brand nav-logo"
+          ></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse
             className="justify-content-end"
             id="basic-navbar-nav"
           >
-            <ul>
-              <Link to={`/users/${user}`}>
-                <Button variant="link" className="navbar-link text-light">
-                  My Account
-                </Button>
-              </Link>
-              <Link to={`/`}>
-                <Button variant="link" className="navbar-link text-light">
-                  Movies
-                </Button>
-              </Link>
-              <Link to={`/`}>
-                <Button
-                  variant="link"
-                  className="navbar-link text-light"
-                  onClick={() => this.onLoggedOut()}
-                >
-                  Logout
-                </Button>
-              </Link>
-            </ul>
+            <Link to={`/users/${user}`}>
+              <Button variant="link" className="navbar-link text-light">
+                My Account
+              </Button>
+            </Link>
+            <Link to={`/`}>
+              <Button variant="link" className="navbar-link text-light">
+                Movies
+              </Button>
+            </Link>
+            <Link to={`/`}>
+              <Button
+                variant="link"
+                className="navbar-link text-light"
+                onClick={() => this.onLoggedOut()}
+              >
+                Logout
+              </Button>
+            </Link>
           </Navbar.Collapse>
         </Container>
       </Navbar>

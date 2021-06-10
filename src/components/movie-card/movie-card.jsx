@@ -7,6 +7,9 @@ import "./movie-card.scss";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
+import heartempty from "../../imgs/heart-regular.svg";
+import heartfull from "../../imgs/heart-solid.svg";
+
 export function MovieCard(props) {
   const movie = props.movie;
 
@@ -26,16 +29,12 @@ export function MovieCard(props) {
   if (props.isFavorite) {
     // is favorite
     buttonElement = (
-      <Button type="button" onClick={handleSubmit}>
-        Remove from favorites
-      </Button>
+      <img src={heartfull} width="20" type="button" onClick={handleSubmit} />
     );
   } else {
     // not favorite
     buttonElement = (
-      <Button type="button" onClick={handleSubmit}>
-        Save to favorite
-      </Button>
+      <img src={heartempty} width="20" type="button" onClick={handleSubmit} />
     );
   }
 

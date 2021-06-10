@@ -30,38 +30,55 @@ export function LoginView(props) {
   };
 
   return (
-    <div className="loginView">
-      <Container>
-        <div className="centerVertical"></div>
-        <div className="loginScreen">
-          <h1 className="pb-3">Login</h1>
-          <Form>
-            <Form.Group controlId="formUsername">
-              <Form.Label>Username:</Form.Label>
-              <Form.Control
-                type="text"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </Form.Group>
+    <Container fluid>
+      <div className="row no-gutter">
+        <div className="col-md-6 d-none d-md-flex bg-image"></div>
 
-            <Form.Group controlId="formPassword">
-              <Form.Label>Password:</Form.Label>
-              <Form.Control
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
-              Submit
-            </Button>
-            <p>
-              Don't have an account?
-              <Link to="/register"> Register</Link>
-            </p>
-          </Form>
+        <div className="col-md-6 bg-light">
+          <div className="login d-flex align-items-center py-5">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-10 col-xl-7 mx-auto">
+                  <h3>LOGIN</h3>
+                  <p className="text-white mb-4">
+                    Enter the world of anime Movies
+                  </p>
+                  <Form>
+                    <Form.Group controlId="formUsername">
+                      <Form.Label>Username:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </Form.Group>
+
+                    <Form.Group controlId="formPassword">
+                      <Form.Label>Password:</Form.Label>
+                      <Form.Control
+                        type="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </Form.Group>
+                    <Button
+                      className="button"
+                      variant="primary"
+                      type="submit"
+                      onClick={handleSubmit}
+                    >
+                      Submit
+                    </Button>
+                    <p className="mt-5">
+                      Don't have an account?
+                      <Link to="/register"> Register</Link>
+                    </p>
+                  </Form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </Container>
-    </div>
+      </div>
+    </Container>
   );
 }
 

@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
 
 import "./registration-view.scss";
 
@@ -51,74 +52,92 @@ export function RegistrationView() {
   };
 
   return (
-    <div className="registrationView">
-      <div className="loginScreen">
-        <h1 className="pb-3">Registration</h1>
-        <Form>
-          <Form.Group controlId="formUsername">
-            <Form.Label>Username:*</Form.Label>
-            <Form.Control
-              type="text"
-              value={username}
-              placeholder="Enter Username"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </Form.Group>
+    <Container fluid>
+      <div className="row no-gutter">
+        <div className="col-md-6 d-none d-md-flex bg-image"></div>
 
-          <Form.Group controlId="formEmail">
-            <Form.Label>
-              Email: <span>*</span>
-            </Form.Label>
-            <Form.Control
-              type="email"
-              value={email}
-              placeholder="Enter your Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group>
+        <div className="col-md-6 bg-light">
+          <div className="login d-flex align-items-center py-5">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-10 col-xl-7 mx-auto">
+                  <h3>REGISTRATION</h3>
+                  <p className="text-white mb-4">Join us, we have cookies!</p>
+                  <Form>
+                    <Form.Group controlId="formUsername">
+                      <Form.Label>Username:*</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={username}
+                        placeholder="Enter Username"
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </Form.Group>
 
-          <Form.Group controlId="formPassword">
-            <Form.Label>
-              Password:<span>*</span>
-            </Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              placeholder="Enter Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Group>
+                    <Form.Group controlId="formEmail">
+                      <Form.Label>
+                        Email: <span>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="email"
+                        value={email}
+                        placeholder="Enter your Email"
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </Form.Group>
 
-          <Form.Group controlId="confirmformPassword">
-            <Form.Label>
-              Confirm Password:<span>*</span>
-            </Form.Label>
-            <Form.Control
-              type="password"
-              value={confirmPassword}
-              placeholder="Enter Password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </Form.Group>
+                    <Form.Group controlId="formPassword">
+                      <Form.Label>
+                        Password:<span>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="password"
+                        value={password}
+                        placeholder="Enter Password"
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </Form.Group>
 
-          <Form.Group controlId="formBirthday">
-            <Form.Label>Birthday:</Form.Label>
-            <Form.Control
-              type="date"
-              placeholder="MM/DD/YYYY"
-              onChange={(e) => setBirthday(e.target.value)}
-            />
-          </Form.Group>
+                    <Form.Group controlId="confirmformPassword">
+                      <Form.Label>
+                        Confirm Password:<span>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="password"
+                        value={confirmPassword}
+                        placeholder="Enter Password"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                    </Form.Group>
 
-          <Button variant="primary" type="submit" onClick={handleSubmit}>
-            Submit
-          </Button>
-          <p>
-            Already have an account?
-            <Link to="/"> Login</Link>
-          </p>
-        </Form>
+                    <Form.Group controlId="formBirthday">
+                      <Form.Label>Birthday:</Form.Label>
+                      <Form.Control
+                        type="date"
+                        placeholder="MM/DD/YYYY"
+                        onChange={(e) => setBirthday(e.target.value)}
+                      />
+                    </Form.Group>
+
+                    <Button
+                      className="button"
+                      variant="primary"
+                      type="submit"
+                      onClick={handleSubmit}
+                    >
+                      Submit
+                    </Button>
+                    <p className="mt-5">
+                      Already have an account?
+                      <Link to="/"> Login</Link>
+                    </p>
+                  </Form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </Container>
   );
 }

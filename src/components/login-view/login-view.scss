@@ -1,23 +1,52 @@
-.loginView {
-  height: 100vh;
-  background-color: rgb(11, 10, 36);
-  background-image: url("https://c.wallhere.com/photos/0b/ca/anime_manga_anime_man_illustration_fan_art_dark_background_selective_coloring_texture-1746221.jpg!d");
-  background-size: contain;
-  background-blend-mode: screen;
+body {
+  color: white;
 }
 
-.centerVertical {
-  display: table-cell;
-  width: 500px;
-  height: 300px;
-  vertical-align: middle;
-  text-align: center;
+.login,
+.image {
+  min-height: 100vh;
 }
 
-.loginScreen {
-  background-color: rgb(255, 255, 255);
-  border-radius: 20px;
-  padding: 30px;
-  margin: 0 auto;
-  width: 600px;
+.login {
+  background-color: #272636;
+  background-image: url("https://www.pixelstalk.net/wp-content/uploads/2016/10/Desktop-Free-Anime-Landscape-Backgrounds.jpg");
+  background-blend-mode: multiply;
+}
+
+.bg-image {
+  background-color: rgba(10, 15, 36, 0);
+  background-blend-mode: multiply;
+  background-image: url("https://www.pixelstalk.net/wp-content/uploads/2016/10/Desktop-Free-Anime-Landscape-Backgrounds.jpg");
+  background-size: cover;
+  background-position: center center;
+}
+
+.button {
+  margin-top: 20px;
+  border-radius: 100px;
+  color: white;
+  background-color: #242236;
+  border: none;
+  padding: 10px 20px 10px 20px;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #ffc02f;
+    color: #242236;
+  }
+}
+
+h3 {
+  font-size: 45pt;
+  letter-spacing: 2pt;
+  font-weight: bold;
+}
+
+a {
+  color: #ffc02f;
+}
+
+.no-gutter > [class^="col-md-6"] {
+  padding-left: 0;
+  padding-right: 0;
 }

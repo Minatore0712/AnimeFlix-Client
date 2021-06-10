@@ -35539,7 +35539,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/classnames/index.js":[function(require,module,exports) {
+},{"./..\\..\\imgs\\logo.png":[["logo.91a27c4f.png","imgs/logo.png"],"imgs/logo.png"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/classnames/index.js":[function(require,module,exports) {
 var define;
 /*!
   Copyright (c) 2018 Jed Watson.
@@ -37139,15 +37139,25 @@ function LoginView(props) {
     });
   };
 
-  return /*#__PURE__*/_react.default.createElement("div", {
-    className: "loginView"
-  }, /*#__PURE__*/_react.default.createElement(_Container.default, null, /*#__PURE__*/_react.default.createElement("div", {
-    className: "centerVertical"
+  return /*#__PURE__*/_react.default.createElement(_Container.default, {
+    fluid: true
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "row no-gutter"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "col-md-6 d-none d-md-flex bg-image"
   }), /*#__PURE__*/_react.default.createElement("div", {
-    className: "loginScreen"
-  }, /*#__PURE__*/_react.default.createElement("h1", {
-    className: "pb-3"
-  }, "Login"), /*#__PURE__*/_react.default.createElement(_Form.default, null, /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
+    className: "col-md-6 bg-light"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "login d-flex align-items-center py-5"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "col-lg-10 col-xl-7 mx-auto"
+  }, /*#__PURE__*/_react.default.createElement("h3", null, "LOGIN"), /*#__PURE__*/_react.default.createElement("p", {
+    className: "text-white mb-4"
+  }, "Enter the world of anime Movies"), /*#__PURE__*/_react.default.createElement(_Form.default, null, /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "formUsername"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Username:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "text",
@@ -37162,12 +37172,15 @@ function LoginView(props) {
       return setPassword(e.target.value);
     }
   })), /*#__PURE__*/_react.default.createElement(_Button.default, {
+    className: "button",
     variant: "primary",
     type: "submit",
     onClick: handleSubmit
-  }, "Submit"), /*#__PURE__*/_react.default.createElement("p", null, "Don't have an account?", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+  }, "Submit"), /*#__PURE__*/_react.default.createElement("p", {
+    className: "mt-5"
+  }, "Don't have an account?", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "/register"
-  }, " Register"))))));
+  }, " Register"))))))))));
 }
 
 LoginView.propTypes = {
@@ -37364,7 +37377,11 @@ Card.Footer = CardFooter;
 Card.ImgOverlay = CardImgOverlay;
 var _default = Card;
 exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","classnames":"../node_modules/classnames/index.js","react":"../node_modules/react/index.js","./ThemeProvider":"../node_modules/react-bootstrap/esm/ThemeProvider.js","./createWithBsPrefix":"../node_modules/react-bootstrap/esm/createWithBsPrefix.js","./divWithClassName":"../node_modules/react-bootstrap/esm/divWithClassName.js","./CardContext":"../node_modules/react-bootstrap/esm/CardContext.js","./CardImg":"../node_modules/react-bootstrap/esm/CardImg.js"}],"components/movie-card/movie-card.jsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","classnames":"../node_modules/classnames/index.js","react":"../node_modules/react/index.js","./ThemeProvider":"../node_modules/react-bootstrap/esm/ThemeProvider.js","./createWithBsPrefix":"../node_modules/react-bootstrap/esm/createWithBsPrefix.js","./divWithClassName":"../node_modules/react-bootstrap/esm/divWithClassName.js","./CardContext":"../node_modules/react-bootstrap/esm/CardContext.js","./CardImg":"../node_modules/react-bootstrap/esm/CardImg.js"}],"imgs/heart-regular.svg":[function(require,module,exports) {
+module.exports = "/heart-regular.ca46d56d.svg";
+},{}],"imgs/heart-solid.svg":[function(require,module,exports) {
+module.exports = "/heart-solid.80b8ffb0.svg";
+},{}],"components/movie-card/movie-card.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37383,6 +37400,10 @@ require("./movie-card.scss");
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Card = _interopRequireDefault(require("react-bootstrap/Card"));
+
+var _heartRegular = _interopRequireDefault(require("../../imgs/heart-regular.svg"));
+
+var _heartSolid = _interopRequireDefault(require("../../imgs/heart-solid.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37405,16 +37426,20 @@ function MovieCard(props) {
 
   if (props.isFavorite) {
     // is favorite
-    buttonElement = /*#__PURE__*/_react.default.createElement(_Button.default, {
+    buttonElement = /*#__PURE__*/_react.default.createElement("img", {
+      src: _heartSolid.default,
+      width: "20",
       type: "button",
       onClick: handleSubmit
-    }, "Remove from favorites");
+    });
   } else {
     // not favorite
-    buttonElement = /*#__PURE__*/_react.default.createElement(_Button.default, {
+    buttonElement = /*#__PURE__*/_react.default.createElement("img", {
+      src: _heartRegular.default,
+      width: "20",
       type: "button",
       onClick: handleSubmit
-    }, "Save to favorite");
+    });
   }
 
   return /*#__PURE__*/_react.default.createElement(_Card.default, {
@@ -37438,7 +37463,7 @@ MovieCard.propTypes = {
   onSaveClick: _propTypes.default.func.isRequired,
   onRemoveClick: _propTypes.default.func.isRequired
 };
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./movie-card.scss":"components/movie-card/movie-card.scss","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js"}],"components/movie-view/movie-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./movie-card.scss":"components/movie-card/movie-card.scss","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","../../imgs/heart-regular.svg":"imgs/heart-regular.svg","../../imgs/heart-solid.svg":"imgs/heart-solid.svg"}],"components/movie-view/movie-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -51439,6 +51464,8 @@ var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
+var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
+
 require("./registration-view.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -51516,13 +51543,25 @@ function RegistrationView() {
     });
   };
 
-  return /*#__PURE__*/_react.default.createElement("div", {
-    className: "registrationView"
+  return /*#__PURE__*/_react.default.createElement(_Container.default, {
+    fluid: true
   }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "loginScreen"
-  }, /*#__PURE__*/_react.default.createElement("h1", {
-    className: "pb-3"
-  }, "Registration"), /*#__PURE__*/_react.default.createElement(_Form.default, null, /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
+    className: "row no-gutter"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "col-md-6 d-none d-md-flex bg-image"
+  }), /*#__PURE__*/_react.default.createElement("div", {
+    className: "col-md-6 bg-light"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "login d-flex align-items-center py-5"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "row"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "col-lg-10 col-xl-7 mx-auto"
+  }, /*#__PURE__*/_react.default.createElement("h3", null, "REGISTRATION"), /*#__PURE__*/_react.default.createElement("p", {
+    className: "text-white mb-4"
+  }, "Join us, we have cookies!"), /*#__PURE__*/_react.default.createElement(_Form.default, null, /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "formUsername"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Username:*"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "text",
@@ -51567,14 +51606,17 @@ function RegistrationView() {
       return setBirthday(e.target.value);
     }
   })), /*#__PURE__*/_react.default.createElement(_Button.default, {
+    className: "button",
     variant: "primary",
     type: "submit",
     onClick: handleSubmit
-  }, "Submit"), /*#__PURE__*/_react.default.createElement("p", null, "Already have an account?", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+  }, "Submit"), /*#__PURE__*/_react.default.createElement("p", {
+    className: "mt-5"
+  }, "Already have an account?", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "/"
-  }, " Login")))));
+  }, " Login"))))))))));
 }
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../node_modules/axios/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","./registration-view.scss":"components/registration-view/registration-view.scss"}],"../node_modules/moment/moment.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../node_modules/axios/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","./registration-view.scss":"components/registration-view/registration-view.scss"}],"../node_modules/moment/moment.js":[function(require,module,exports) {
 var define;
 var global = arguments[3];
 //! moment.js
@@ -57717,13 +57759,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         variant: "dark"
       }, _defineProperty(_React$createElement, "expand", "lg"), _defineProperty(_React$createElement, "className", "navbar shadow-sm"), _React$createElement), /*#__PURE__*/_react.default.createElement(_Container.default, null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Navbar.Brand, {
         href: "http://localhost:1234",
-        className: "navbar-brand"
-      }, "animeFlix"), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Navbar.Toggle, {
+        className: "navbar-brand nav-logo"
+      }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Navbar.Toggle, {
         "aria-controls": "basic-navbar-nav"
       }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Navbar.Collapse, {
         className: "justify-content-end",
         id: "basic-navbar-nav"
-      }, /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
         to: "/users/".concat(user)
       }, /*#__PURE__*/_react.default.createElement(_Button.default, {
         variant: "link",
@@ -57741,7 +57783,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick() {
           return _this7.onLoggedOut();
         }
-      }, "Logout"))))));
+      }, "Logout")))));
 
       var footer = /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("footer", null, /*#__PURE__*/_react.default.createElement(_Container.default, null, /*#__PURE__*/_react.default.createElement(_Row.default, null, /*#__PURE__*/_react.default.createElement(_Col.default, {
         md: 6
@@ -57996,7 +58038,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59712" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57064" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
