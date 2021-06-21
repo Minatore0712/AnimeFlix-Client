@@ -7,7 +7,6 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
-  Link,
 } from "react-router-dom";
 
 import "./main-view.scss";
@@ -19,15 +18,14 @@ import { DirectorView } from "../director-view/director-view";
 import { RegistrationView } from "../registration-view/registration-view";
 import { ProfileView } from "../profile-view/profile-view";
 
-import Row from "react-bootstrap/Row";
+
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import { Navbar } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import logo from "../../imgs/logo.png";
 
 import { setMovies } from "../../actions/actions";
 import MoviesList from "../movies-list/movies-list";
+import { Navigation } from "../navigation/navigation";
+import { Footer } from "../footer/footer";
 
 class MainView extends React.Component {
   constructor() {
@@ -210,76 +208,12 @@ class MainView extends React.Component {
 
   render() {
     let { movies } = this.props;
-    let { user } = this.state;
-
-    const navigation = (
-      <Navbar
-        expand="lg"
-        variant="dark"
-        expand="lg"
-        className="navbar shadow-sm"
-      >
-        <Container>
-          <Navbar.Brand
-            href="http://localhost:1234"
-            className="navbar-brand nav-logo"
-          ></Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse
-            className="justify-content-end"
-            id="basic-navbar-nav"
-          >
-            <Link to={`/users/${user}`}>
-              <Button variant="link" className="navbar-link text-light">
-                My Account
-              </Button>
-            </Link>
-            <Link to={`/`}>
-              <Button variant="link" className="navbar-link text-light">
-                Movies
-              </Button>
-            </Link>
-            <Link to={`/`}>
-              <Button
-                variant="link"
-                className="navbar-link text-light"
-                onClick={() => this.onLoggedOut()}
-              >
-                Logout
-              </Button>
-            </Link>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    );
-
-    const footer = (
-      <div>
-        <footer>
-          <Container>
-            <Row>
-              <Col md={6}>
-                <div>
-                  <div className="footerLogo">
-                    <img src={logo} alt="logo" />
-                  </div>
-                </div>
-              </Col>
-              <Col md={6}>
-                <div className="d-flex flex-row-reverse">
-                  <span>2020 Minatore0712</span>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </footer>
-      </div>
-    );
+    let { user, userData } = this.state;
 
     const login = (
       <div>
         <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-        {footer}
+        <Footer/>
       </div>
     );
 
@@ -295,7 +229,16 @@ class MainView extends React.Component {
             }
 
             if (movies.length === 0) return <div className="main-view" />;
-            return <MoviesList movies={movies} />;
+            return (
+              <MoviesList
+              isFavorite={(m) => this.isFavorite(m)}
+              addFavorite={(m) => this.addFavorite(m)}
+              removeFavorite={(m) => this.removeFavorite(m)}
+                movies={movies}
+                user={userData}
+                onLoggedOut={() => this.onLoggedOut()}
+              />
+            );
           }}
         />
 
@@ -309,14 +252,17 @@ class MainView extends React.Component {
             }
             return (
               <div>
-                {navigation}
+                <Navigation
+                  user={userData}
+                  onLoggedOut={() => this.onLoggedOut()}
+                />
                 <Container>
                   <MovieView
                     movie={movies.find((m) => m._id === match.params.movieId)}
                     onBackClick={() => history.goBack()}
                   />
                 </Container>
-                {footer}
+                <Footer/>
               </div>
             );
           }}
@@ -330,7 +276,7 @@ class MainView extends React.Component {
             return (
               <div>
                 <RegistrationView />
-                {footer}
+                <Footer/>
               </div>
             );
           }}
@@ -356,7 +302,7 @@ class MainView extends React.Component {
                     onBackClick={() => history.goBack()}
                   />
                 </Container>
-                {footer}
+                <Footer/>
               </div>
             );
           }}
@@ -385,7 +331,7 @@ class MainView extends React.Component {
                     />
                   </Col>
                 </Container>
-                {footer}
+                <Footer/>
               </div>
             );
           }}
@@ -401,20 +347,23 @@ class MainView extends React.Component {
             }
             return (
               <div>
-                {navigation}
+                <Navigation
+                  user={userData}
+                  onLoggedOut={() => this.onLoggedOut()}
+                /> 
                 <Container>
                   <ProfileView
                     user={this.state.userData}
                     onBackClick={() => history.goBack()}
                     onSaveClick={(user) => this.updateUser(user)}
                     onDeleteClick={(username) => this.deleteUser(username)}
-                    movies={this.state.movies}
+                    movies={this.props.movies}
                     favMovieIds={this.state.userData.FavoriteMovies}
                     onSaveFavoClick={(m) => this.addFavorite(m)}
                     onRemoveFavoClick={(m) => this.removeFavorite(m)}
                   />
                 </Container>
-                {footer}
+                <Footer/>
               </div>
             );
           }}

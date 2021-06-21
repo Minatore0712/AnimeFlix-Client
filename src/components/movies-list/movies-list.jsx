@@ -1,9 +1,13 @@
 import React from "react";
 import Col from "react-bootstrap/Col";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import VisibilityFilterInput from "../visibility-filter-input/visibility-filter-input";
 import { MovieCard } from "../movie-card/movie-card";
+import { Navigation } from "../navigation/navigation";
+import { Container, Row } from "react-bootstrap"
+import { Footer } from "../footer/footer";
 
 const mapStateToProps = (state) => {
   const { visibilityFilter } = state;
@@ -26,16 +30,16 @@ function MoviesList(props) {
     <Col md={3} key={m._id}>
       <MovieCard
         movie={m}
-        isFavorite={this.isFavorite(m)}
-        onSaveClick={(movie) => this.addFavorite(movie)}
-        onRemoveClick={(movie) => this.removeFavorite(movie)}
+        isFavorite={props.isFavorite(m)}
+        onSaveClick={(m) => props.addFavorite(m)}
+        onRemoveClick={(m) => props.removeFavorite(m)}
       />
     </Col>
   ));
 
   return (
     <div>
-      {navigation}
+      <Navigation user={props.user} onLoggedOut={() => props.onLoggedOut()}/>
       <Container>
         <Row>
           <Col md={12} style={{ margin: "1em" }}>
@@ -44,9 +48,19 @@ function MoviesList(props) {
           {cards}
         </Row>
       </Container>
-      {footer}
+      <Footer/>
     </div>
   );
 }
+
+MoviesList.propTypes = {
+  isFavorite: PropTypes.func.isRequired,
+  addFavorite: PropTypes.func.isRequired,
+  removeFavorite: PropTypes.func.isRequired,
+  visibilityFilter: PropTypes.string.isRequired,
+  movies: PropTypes.array,
+  onLoggedOut: PropTypes.func.isRequired,
+  
+};
 
 export default connect(mapStateToProps)(MoviesList);

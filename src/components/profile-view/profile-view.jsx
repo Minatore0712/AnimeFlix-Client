@@ -36,7 +36,7 @@ export function ProfileView(props) {
 
   let element;
   if (!favMovies || favMovies.length <= 0) {
-    element = <div>You don't have any favorites!</div>;
+    element = <div className="mt-5 mb-5 ml-4">You don't have any favorites!</div>;
   } else {
     element = favMovies.map((m) => (
       <Col md={3} key={m._id}>
@@ -127,7 +127,7 @@ export function ProfileView(props) {
       </Form>
 
       <div className="mt-5">
-        <h1>Favorite Movies</h1>
+        <h1 className="mb-3">Favorite Movies</h1>
         <div>
           <Row>{element}</Row>
         </div>
