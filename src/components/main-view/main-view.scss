@@ -1,3 +1,10 @@
+body {
+  background-color: #1c1b27;
+  background-image: url("https://www.pixelstalk.net/wp-content/uploads/2016/10/Desktop-Free-Anime-Landscape-Backgrounds.jpg");
+  background-blend-mode: multiply;
+  background-size: cover;
+}
+
 footer {
   padding: 50px;
   background-color: rgb(36, 34, 54);
@@ -6,4 +13,19 @@ footer {
 
 .navbar {
   background-color: rgb(36, 34, 54);
+}
+
+.nav-logo {
+  background-image: url("../../imgs/logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 50%;
+  height: 30px;
+  padding: 10px;
+}
+
+.footerLogo {
+  img {
+    height: 40px;
+  }
 }

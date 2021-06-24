@@ -7,3 +7,40 @@
     transform: scale(1.02);
   }
 }
+
+.cardWrap {
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+
+.img-card {
+  width: 100%;
+  -webkit-box-shadow: 5px 5px 15px 5px #100e20;
+  box-shadow: 5px 5px 15px 5px #100e20;
+  margin-bottom: 15px;
+
+  img {
+    background-size: center;
+    width: 100%;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+}
+
+.title-card {
+  display: flex;
+  text-align: center;
+
+  img {
+    margin-left: auto;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
+}

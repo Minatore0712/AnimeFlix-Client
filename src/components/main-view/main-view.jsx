@@ -1,33 +1,36 @@
 import React from "react";
 import axios from "axios";
+
+import { connect } from "react-redux";
+
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
-  Link,
 } from "react-router-dom";
 
 import "./main-view.scss";
 
 import { LoginView } from "../login-view/login-view";
-import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { GenreView } from "../genre-view/genre-view";
 import { DirectorView } from "../director-view/director-view";
 import { RegistrationView } from "../registration-view/registration-view";
 import { ProfileView } from "../profile-view/profile-view";
 
-import Row from "react-bootstrap/Row";
+
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import { Navbar } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 
-export class MainView extends React.Component {
+import { setMovies } from "../../actions/actions";
+import MoviesList from "../movies-list/movies-list";
+import { Navigation } from "../navigation/navigation";
+import { Footer } from "../footer/footer";
+
+class MainView extends React.Component {
   constructor() {
     super();
     this.state = {
-      movies: [],
       user: null,
       userData: undefined,
     };
@@ -51,9 +54,7 @@ export class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        this.setState({
-          movies: response.data,
-        });
+        this.props.setMovies(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -148,6 +149,14 @@ export class MainView extends React.Component {
       });
   }
 
+  isFavorite(movie) {
+    return (
+      !this.state.userData ||
+      !this.state.userData.FavoriteMovies ||
+      this.state.userData.FavoriteMovies.indexOf(movie._id) >= 0
+    );
+  }
+
   removeFavorite(movie) {
     const token = localStorage.getItem("token");
 
@@ -197,91 +206,14 @@ export class MainView extends React.Component {
     });
   }
 
-  onRegister() {
-    this.setState({
-      wantsRegistration: true,
-    });
-  }
-
-  isFavorite(movie) {
-    return (
-      !this.state.userData ||
-      !this.state.userData.FavoriteMovies ||
-      this.state.userData.FavoriteMovies.indexOf(movie._id) >= 0
-    );
-  }
-
   render() {
-    const { movies, user } = this.state;
-
-    const navigation = (
-      <Navbar
-        expand="lg"
-        variant="dark"
-        expand="lg"
-        className="navbar shadow-sm"
-      >
-        <Container>
-          <Navbar.Brand href="http://localhost:1234" className="navbar-brand">
-            animeFlix
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse
-            className="justify-content-end"
-            id="basic-navbar-nav"
-          >
-            <ul>
-              <Link to={`/users/${user}`}>
-                <Button variant="link" className="navbar-link text-light">
-                  My Account
-                </Button>
-              </Link>
-              <Link to={`/`}>
-                <Button variant="link" className="navbar-link text-light">
-                  Movies
-                </Button>
-              </Link>
-              <Link to={`/`}>
-                <Button
-                  variant="link"
-                  className="navbar-link text-light"
-                  onClick={() => this.onLoggedOut()}
-                >
-                  Logout
-                </Button>
-              </Link>
-            </ul>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    );
-
-    const footer = (
-      <div>
-        <footer>
-          <Container>
-            <Row>
-              <Col md={6}>
-                <div>
-                  <p>animeFlix App</p>
-                  <p>Logo Placeholder</p>
-                </div>
-              </Col>
-              <Col md={6}>
-                <div>
-                  <p>2020 Minatore0712</p>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </footer>
-      </div>
-    );
+    let { movies } = this.props;
+    let { user, userData } = this.state;
 
     const login = (
       <div>
         <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-        {footer}
+        <Footer/>
       </div>
     );
 
@@ -296,25 +228,16 @@ export class MainView extends React.Component {
               return login;
             }
 
-            const cards = movies.map((m) => (
-              <Col md={3} key={m._id}>
-                <MovieCard
-                  movie={m}
-                  isFavorite={this.isFavorite(m)}
-                  onSaveClick={(movie) => this.addFavorite(movie)}
-                  onRemoveClick={(movie) => this.removeFavorite(movie)}
-                />
-              </Col>
-            ));
-
+            if (movies.length === 0) return <div className="main-view" />;
             return (
-              <div>
-                {navigation}
-                <Container>
-                  <Row>{cards}</Row>
-                </Container>
-                {footer}
-              </div>
+              <MoviesList
+              isFavorite={(m) => this.isFavorite(m)}
+              addFavorite={(m) => this.addFavorite(m)}
+              removeFavorite={(m) => this.removeFavorite(m)}
+                movies={movies}
+                user={userData}
+                onLoggedOut={() => this.onLoggedOut()}
+              />
             );
           }}
         />
@@ -329,14 +252,17 @@ export class MainView extends React.Component {
             }
             return (
               <div>
-                {navigation}
-                <Col md={4}>
+                <Navigation
+                  user={userData}
+                  onLoggedOut={() => this.onLoggedOut()}
+                />
+                <Container>
                   <MovieView
                     movie={movies.find((m) => m._id === match.params.movieId)}
                     onBackClick={() => history.goBack()}
                   />
-                </Col>
-                {footer}
+                </Container>
+                <Footer/>
               </div>
             );
           }}
@@ -350,7 +276,7 @@ export class MainView extends React.Component {
             return (
               <div>
                 <RegistrationView />
-                {footer}
+                <Footer/>
               </div>
             );
           }}
@@ -367,7 +293,7 @@ export class MainView extends React.Component {
             if (movies.length === 0) return <div className="main-view" />;
             return (
               <div>
-                <Col md={6}>
+                <Container>
                   <GenreView
                     genre={
                       movies.find((m) => m.Genre.Name === match.params.name)
@@ -375,8 +301,8 @@ export class MainView extends React.Component {
                     }
                     onBackClick={() => history.goBack()}
                   />
-                </Col>
-                {footer}
+                </Container>
+                <Footer/>
               </div>
             );
           }}
@@ -393,16 +319,19 @@ export class MainView extends React.Component {
             if (movies.length === 0) return <div className="main-view" />;
             return (
               <div>
-                <Col md={6}>
-                  <DirectorView
-                    director={
-                      movies.find((m) => m.Director.Name === match.params.name)
-                        .Director
-                    }
-                    onBackClick={() => history.goBack()}
-                  />
-                </Col>
-                {footer}
+                <Container>
+                  <Col md={6}>
+                    <DirectorView
+                      director={
+                        movies.find(
+                          (m) => m.Director.Name === match.params.name
+                        ).Director
+                      }
+                      onBackClick={() => history.goBack()}
+                    />
+                  </Col>
+                </Container>
+                <Footer/>
               </div>
             );
           }}
@@ -418,20 +347,23 @@ export class MainView extends React.Component {
             }
             return (
               <div>
-                {navigation}
+                <Navigation
+                  user={userData}
+                  onLoggedOut={() => this.onLoggedOut()}
+                /> 
                 <Container>
                   <ProfileView
                     user={this.state.userData}
                     onBackClick={() => history.goBack()}
                     onSaveClick={(user) => this.updateUser(user)}
                     onDeleteClick={(username) => this.deleteUser(username)}
-                    movies={this.state.movies}
+                    movies={this.props.movies}
                     favMovieIds={this.state.userData.FavoriteMovies}
                     onSaveFavoClick={(m) => this.addFavorite(m)}
                     onRemoveFavoClick={(m) => this.removeFavorite(m)}
                   />
                 </Container>
-                {footer}
+                <Footer/>
               </div>
             );
           }}
@@ -441,4 +373,8 @@ export class MainView extends React.Component {
   }
 }
 
-export default MainView;
+let mapStateToProps = (state) => {
+  return { movies: state.movies };
+};
+
+export default connect(mapStateToProps, { setMovies })(MainView);

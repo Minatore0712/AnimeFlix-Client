@@ -3,23 +3,25 @@ import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 
+import "./genre-view.scss";
+
 export class GenreView extends React.Component {
   render() {
     const { genre, onBackClick } = this.props;
 
     return (
       <div className="genre-view">
-        <Card border="info" bg="dark" text="white" className="genre-card">
+        <div className="genre-card">
           <Card.Body>
             <Card.Title>
-              <span className="text-primary">Name: </span> {genre.Name}
+              <span>Name:&nbsp;&nbsp; </span> {genre.Name}
             </Card.Title>
             <Card.Text>
-              <span className="text-primary">Bio: </span>
+              <span>Bio:&nbsp;&nbsp; </span>
               {genre.Description}
             </Card.Text>
             <Button
-              block
+              className="button"
               onClick={() => {
                 onBackClick();
               }}
@@ -27,7 +29,7 @@ export class GenreView extends React.Component {
               Back
             </Button>
           </Card.Body>
-        </Card>
+        </div>
       </div>
     );
   }

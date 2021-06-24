@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 import "./movie-card.scss";
 
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+import heartempty from "../../imgs/heart-regular.svg";
+import heartfull from "../../imgs/heart-solid.svg";
 
 export function MovieCard(props) {
   const movie = props.movie;
@@ -26,30 +26,27 @@ export function MovieCard(props) {
   if (props.isFavorite) {
     // is favorite
     buttonElement = (
-      <Button type="button" onClick={handleSubmit}>
-        Remove from favorites
-      </Button>
+      <img src={heartfull} width="20" type="button" onClick={handleSubmit} />
     );
   } else {
     // not favorite
     buttonElement = (
-      <Button type="button" onClick={handleSubmit}>
-        Save to favorite
-      </Button>
+      <img src={heartempty} width="20" type="button" onClick={handleSubmit} />
     );
   }
 
   return (
-    <Card className="mt-4 cardStyle">
-      <Card.Img variant="top" src={movie.ImagePath} />
-      <Card.Body>
-        <Card.Title>{movie.Title}</Card.Title>
-        <Link to={`/movies/${movie._id}`}>
-          <Button variant="link">Open</Button>
-        </Link>
+    <div className="cardWrap">
+      <Link to={`/movies/${movie._id}`}>
+        <div className="img-card">
+          <img src={movie.ImagePath} />
+        </div>
+      </Link>
+      <div className="title-card">
+        <span>{movie.Title}</span>
         {buttonElement}
-      </Card.Body>
-    </Card>
+      </div>
+    </div>
   );
 }
 
